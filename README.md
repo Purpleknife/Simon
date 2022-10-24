@@ -2,7 +2,7 @@
 
 Simon is a game of short-term memory skill invented by Ralph H. Baer and Howard J. Morrison. The device creates a series of tones and lights and requires a user to repeat the sequence. If the user succeeds, the series becomes progressively longer and more complex. Once the user fails or the time limit runs out, the game is over.
 
-This project's goals are:
+<strong>This project's goals are:</strong>
 1. Learn how to create a game app (My first one!).
 2. Learn how to add audio to an app.
 3. Learn how to create code sequences/ patterns.
