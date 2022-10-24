@@ -1,9 +1,11 @@
 import React from 'react';
 
+import './Intro.scss';
+
 const Intro = () => {
   return (
-    <div>
-      Simon Game
+    <div className='intro'>
+      <p>Simon Game</p><br />
       <button>Instructions</button>
     </div>
   );

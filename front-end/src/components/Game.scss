@@ -1,28 +1,81 @@
 @import "../styles/variables";
 
+.container {
+  // display: flex;
+  // justify-content: center;
+  text-align: center;
 
-.game {
-
-  .red {
-    background-color: red;
+  .intro_game {
+    //padding-left: 10em;
   }
 
-  .middle {
-
-    .green {
-      background-color: green;
+  .game {
+    display: flex;
+    //flex-flow: column;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 7em;
+    align-items: center;
+    margin-left: 42em;
+    width: 30%;
+    
+  
+    .red {
+      border: 5px solid red;
+      background-color: black;
+      width: 14em;
+      height: 14em;
+      border-radius: 50%;
+      text-align: center;
+      //margin-left: 19em;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
     }
   
-    .blue {
-      background-color: blue;
+    .middle {
+      display: flex;
+      justify-content: space-between;
+
+      .green {
+        border: 5px solid green;
+        background-color: black;
+        width: 14em;
+        height: 14em;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-right: 10em;
+      }
+
+      .start {
+        height: 4em;
+        margin-top: 5em;
+      }
+    
+      .blue {
+        border: 5px solid blue;
+        background-color: black;
+        width: 14em;
+        height: 14em;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-left: 10em;
+      }
     }
+  
+    .yellow {
+      border: 5px solid yellow;
+      background-color: black;
+      width: 14em;
+      height: 14em;
+      border-radius: 50%;
+      //margin-left: 19em;
+      cursor: pointer;
+    }
+  
+  
+  
   }
-
-  .yellow {
-    background-color: yellow;
-  }
-
-
-
 }
+
 

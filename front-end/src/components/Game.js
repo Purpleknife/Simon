@@ -6,15 +6,21 @@ import './Game.scss';
 
 const Game = () => {
   return (
-    <div className='game'>
-      <Intro />
-      <button className="red"></button>
-      <div className='middle'>
-        <button className="green"></button>
-        <button className="start">Start</button>
-        <button className="blue"></button>
+    <div className='container'>
+      <div className='intro_game'>
+        <Intro />
       </div>
-      <button className="yellow"></button>
+      
+      <div className='game'>
+        <button className="red"></button>
+        <div className='middle'>
+          <button className="green"></button>
+          <button className="start">Start</button>
+          <button className="blue"></button>
+        </div>
+        <button className="yellow"></button>
+      </div>
+
     </div>
   );
 }
