@@ -23,8 +23,8 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 
 // Routes
-const userRoutes = require('./routes/users');
-app.use('/', userRoutes(db));
+const gameRoutes = require('./routes/games');
+app.use('/', gameRoutes(db));
 
 
 app.listen(PORT, () => {
