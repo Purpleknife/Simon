@@ -1,15 +1,20 @@
 import React from 'react';
 
+import Intro from './Intro';
+
+import './Game.scss';
+
 const Game = () => {
   return (
-    <div>
-      <button classname="red"></button>
-      <div>
-        <button classname="green"></button>
-        <button classname="start">Start</button>
-        <button classname="blue"></button>
+    <div className='game'>
+      <Intro />
+      <button className="red"></button>
+      <div className='middle'>
+        <button className="green"></button>
+        <button className="start">Start</button>
+        <button className="blue"></button>
       </div>
-      <button classname="yellow"></button>
+      <button className="yellow"></button>
     </div>
   );
 }
