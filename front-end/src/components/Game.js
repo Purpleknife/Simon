@@ -5,11 +5,13 @@ import Intro from './Intro';
 import './Game.scss';
 
 const Game = () => {
-  const [redStyle, setRedStyle] = useState('red');
-  const [greenStyle, setGreenStyle] = useState('green');
-  const [blueStyle, setBlueStyle] = useState('blue');
-  const [yellowStyle, setYellowStyle] = useState('yellow');
-  const [strictStyle, setStrictStyle] = useState('strict');
+  const [style, setStyle] = useState({
+    red: 'red',
+    green: 'green',
+    blue: 'blue',
+    yellow: 'yellow',
+    strict: 'strict'
+  });
 
   const [game, setGame] = useState({
     active: false,
@@ -22,31 +24,49 @@ const Game = () => {
 
   const changeStyle = (condition) => {
     if (condition === 'red') {
-      setRedStyle('red-neon');
+      setStyle(
+        {...style, red: 'red-neon'},
+      );
       setTimeout(() => {
-        setRedStyle('red');
-      }, "700");
+        setStyle(
+          {...style, red: 'red'}
+        );
+      }, "500");
     }
     if (condition === 'green') {
-      setGreenStyle('green-neon');
+      setStyle(
+        {...style, green: 'green-neon'}
+      );
       setTimeout(() => {
-        setGreenStyle('green');
-      }, "700");
+        setStyle(
+          {...style, green: 'green'}
+        );
+      }, "500");
     }
     if (condition === 'blue') {
-      setBlueStyle('blue-neon');
+      setStyle(
+        {...style, blue: 'blue-neon'}
+      );
       setTimeout(() => {
-        setBlueStyle('blue');
-      }, "700");
+        setStyle(
+          {...style, blue: 'blue'}
+        );
+      }, "500");
     }
     if (condition === 'yellow') {
-      setYellowStyle('yellow-neon');
+      setStyle(
+        {...style, yellow: 'yellow-neon'}
+      );
       setTimeout(() => {
-        setYellowStyle('yellow');
-      }, "700");
+        setStyle(
+          {...style, yellow: 'yellow'}
+        );
+      }, "500");
     }
     if (condition === 'strict') {
-      setStrictStyle('strict-neon');
+      setStyle(
+        {...style, strict: 'strict-neon'}
+      );
     }
   };
 
@@ -57,11 +77,11 @@ const Game = () => {
       </div>
       
       <div className='game'>
-        <span id='level'><i class="fa-solid fa-caret-right"></i>  Level 1 / 20</span>
+        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level 1 / 20</span>
         <div id='time'><span>00:00</span></div><br />
-        <button className={redStyle} onClick={() => changeStyle('red')}></button>
+        <button className={style.red} onClick={() => changeStyle('red')}></button>
         <div className='middle'>
-          <button className={greenStyle} onClick={() => changeStyle('green')}></button>
+          <button className={style.green} onClick={() => changeStyle('green')}></button>
 
           <div className='mid'>
             <div id='count'>
@@ -70,13 +90,13 @@ const Game = () => {
             </div><br />
 
               <button className="start">Start</button>&nbsp;&nbsp;
-              <button className={strictStyle} onClick={() => changeStyle('strict')}>Strict</button>
+              <button className={style.strict} onClick={() => changeStyle('strict')}>Strict</button>
 
           </div>
 
-          <button className={blueStyle} onClick={() => changeStyle('blue')}></button>
+          <button className={style.blue} onClick={() => changeStyle('blue')}></button>
         </div>
-        <button className={yellowStyle} onClick={() => changeStyle('yellow')}></button>
+        <button className={style.yellow} onClick={() => changeStyle('yellow')}></button>
       </div>
 
     </div>
