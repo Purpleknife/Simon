@@ -10,9 +10,10 @@
   margin-top: 2em;
 
   p {
-    font-family: $primary-font;
-    font-size: 35px;
+    font-family: $clock2;
+    font-size: 40px;
     font-weight: bold;
+    margin-left: 0.5em;
   }
 
 }
@@ -31,16 +32,16 @@
   .login {
     background-color: grey;
     width: 6em;
-    height: 2.5em;
-    border-radius: 5px;
+    height: 2.6em;
+    border-radius: 8px;
     font-family: $third-font;
   }
 
   .register {
     background-color: grey;
     width: 6em;
-    height: 2.5em;
-    border-radius: 5px;
+    height: 2.6em;
+    border-radius: 8px;
     font-family: $third-font;
   }
 
@@ -57,7 +58,7 @@
 
 .modal-header {
   border-bottom: none !important;
-  font-family: $primary-font;
+  font-family: $clock;
   margin-left: 7em;
   font-weight: bolder;
 }

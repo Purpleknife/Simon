@@ -17,8 +17,8 @@ const Intro = () => {
         <div className='info'>
         <Button className='instructions' onClick={handleShow}>
           Instructions
-        </Button>
-        <button className='login'>Login</button>
+        </Button>&nbsp;
+        <button className='login'>Login</button>&nbsp;
         <button className='register'>Register</button>
       </div>
       <Modal show={show} onHide={handleClose}>
@@ -29,8 +29,10 @@ const Intro = () => {
           - Each button (red, green, blue and yellow) has its own distinct sound.<br />
           - For each level, the game will play a unique sequence of sounds with their respective buttons lightning up.<br />
           - After hearing the sequence, you are supposed to repeat it.<br />
-          - The game is over if you fail to repeat the same sequence.<br />
-          <br />
+          - The game is over if you fail to repeat the same sequence.<br /><br />
+          - <strong>Strict mode:</strong> restarts the game whenever you select the wrong field in a pattern.<br />
+          - <strong>Normal mode:</strong> repeats the pattern subsequent of the wrong button being pressed.
+          <br /><br />
           <span id='fun'>Have fun!</span>
         </Modal.Body>
         <Modal.Footer>
