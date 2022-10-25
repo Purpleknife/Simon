@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Intro from './Intro';
+
+import { shuffle } from '../helpers/helpers';
 
 import './Game.scss';
 
@@ -13,13 +15,59 @@ const Game = () => {
     strict: 'strict'
   });
 
+  const sounds = {
+    red: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
+    green: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
+    blue: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
+    yellow: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
+  };
+
+  const [level, setLevel] = useState(0);
+  const [count, setCount] = useState(0);
+
   const [game, setGame] = useState({
     active: false,
-    level: 1,
+    gameSequenceOver: false,
     time: '00:00',
-    count: 0,
-    strict: false
+    strict: false,
+    playerInput: [],
+    gameRandomOutput: ['red', 'green', 'blue', 'yellow'],
+    actualGame: []
   });
+
+
+  const start = () => {
+    setGame({
+      ...game, 
+      actualGame: shuffle(game.gameRandomOutput)
+    });
+    console.log('game', game);
+    setLevel(prev => prev + 1);
+    
+    playSequence(game.actualGame);
+  };
+
+  useEffect(() => {
+    start();
+  }, []);
+  
+
+  const playSequence = (arr) => {
+    let i = 0;
+
+    const pattern = setInterval(() => {
+      console.log(arr[i]);
+      changeStyle(arr[i]);
+      i++;
+      if (i >= arr.length) {
+        clearInterval(pattern);
+      }
+    }, 600);
+    setGame({
+      ...game, 
+      gameSequenceOver: true
+    });
+  };
 
 
   const changeStyle = (condition) => {
@@ -27,42 +75,50 @@ const Game = () => {
       setStyle(
         {...style, red: 'red-neon'},
       );
+      sounds.red.play();
       setTimeout(() => {
         setStyle(
           {...style, red: 'red'}
         );
-      }, "500");
+      }, "300");
     }
+
     if (condition === 'green') {
       setStyle(
         {...style, green: 'green-neon'}
       );
+      sounds.green.play();
       setTimeout(() => {
         setStyle(
           {...style, green: 'green'}
         );
-      }, "500");
+      }, "300");
     }
+
     if (condition === 'blue') {
       setStyle(
         {...style, blue: 'blue-neon'}
       );
+      sounds.blue.play();
       setTimeout(() => {
         setStyle(
           {...style, blue: 'blue'}
         );
-      }, "500");
+      }, "300");
     }
+
     if (condition === 'yellow') {
       setStyle(
         {...style, yellow: 'yellow-neon'}
       );
+      sounds.yellow.play();
       setTimeout(() => {
         setStyle(
           {...style, yellow: 'yellow'}
         );
-      }, "500");
+      }, "300");
     }
+
     if (condition === 'strict') {
       setStyle(
         {...style, strict: 'strict-neon'}
@@ -82,7 +138,7 @@ const Game = () => {
       </div>
       
       <div className='game'>
-        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level 1 / 20</span>
+        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {level} / 20</span>
         <div id='time'><span>00:00</span></div><br />
         <button className={style.red} onClick={() => changeStyle('red')}></button>
         <div className='middle'>
@@ -90,11 +146,11 @@ const Game = () => {
 
           <div className='mid'>
             <div id='count'>
-              <span>00</span><br />
+              <span>{count < 10 ? `0${count}` : count}</span><br />
               <label>Count</label>
             </div><br />
 
-              <button className="start">Start</button>&nbsp;&nbsp;
+              <button onClick={start} className="start">Start</button>&nbsp;&nbsp;
               <button className={style.strict} onClick={() => { 
                 if (style.strict === 'strict') {
                   return changeStyle('strict');
