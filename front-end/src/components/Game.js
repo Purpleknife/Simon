@@ -24,10 +24,11 @@ const Game = () => {
 
   const [level, setLevel] = useState(0);
   const [count, setCount] = useState(0);
+  const [status, setStatus] = useState(false);
+  const [playerTurnOver, setPlayerTurnOver] = useState(false);
 
   const [game, setGame] = useState({
     active: false,
-    gameSequenceOver: false,
     time: '00:00',
     strict: false,
     playerInput: [],
@@ -41,17 +42,23 @@ const Game = () => {
       ...game, 
       actualGame: shuffle(game.gameRandomOutput)
     });
-    console.log('game', game);
+    
     setLevel(prev => prev + 1);
     
     playSequence(game.actualGame);
+    //setStatus(true); //=> Means that it's the player's turn now.
+
+    console.log('sequence should be TRUE', status);
+
+    
+    
   };
 
   useEffect(() => {
     start();
   }, []);
   
-
+  //Function that plays the sounds and triggers changeStyle() with an interval:
   const playSequence = (arr) => {
     let i = 0;
 
@@ -63,11 +70,39 @@ const Game = () => {
         clearInterval(pattern);
       }
     }, 600);
+    
+    setTimeout(() => {
+      setStatus(true); //=> Means that it's the player's turn now. playerMoves can now run.
+    }, '3000');
+    
+  };
+
+  const playerMoves = (button) => {
+    setCount(prev => prev + 1);
+
     setGame({
       ...game, 
-      gameSequenceOver: true
+      playerInput: [...game.playerInput, button]
     });
+
+
+    if (game.playerInput.length === game.actualGame) {
+      clearGame();
+    }
+
+    //console.log('game', game);
+    console.log('player Input', game.playerInput);
   };
+  
+  const clearGame = () => {
+    setGame({
+      ...game, 
+      actualGame: [],
+      playerInput: []
+    });
+    setCount(0);
+    setStatus(false);
+  }
 
 
   const changeStyle = (condition) => {
@@ -75,48 +110,68 @@ const Game = () => {
       setStyle(
         {...style, red: 'red-neon'},
       );
-      sounds.red.play();
-      setTimeout(() => {
-        setStyle(
-          {...style, red: 'red'}
-        );
-      }, "300");
+    sounds.red.play();
+    
+    if (status === true) { //=> When the sequence stops and it's the player's turn.
+      playerMoves(condition);
+    }
+
+    setTimeout(() => {
+      setStyle(
+        {...style, red: 'red'}
+      );
+    }, "300");
     }
 
     if (condition === 'green') {
       setStyle(
         {...style, green: 'green-neon'}
       );
-      sounds.green.play();
-      setTimeout(() => {
-        setStyle(
-          {...style, green: 'green'}
-        );
-      }, "300");
+    sounds.green.play();
+
+    if (status === true) { //=> When the sequence stops and it's the player's turn.
+      playerMoves(condition);
+    }
+
+    setTimeout(() => {
+      setStyle(
+        {...style, green: 'green'}
+      );
+    }, "300");
     }
 
     if (condition === 'blue') {
       setStyle(
         {...style, blue: 'blue-neon'}
       );
-      sounds.blue.play();
-      setTimeout(() => {
-        setStyle(
-          {...style, blue: 'blue'}
-        );
-      }, "300");
+    sounds.blue.play();
+
+    if (status === true) { //=> When the sequence stops and it's the player's turn.
+      playerMoves(condition);
+    }
+
+    setTimeout(() => {
+      setStyle(
+        {...style, blue: 'blue'}
+      );
+    }, "300");
     }
 
     if (condition === 'yellow') {
       setStyle(
         {...style, yellow: 'yellow-neon'}
       );
-      sounds.yellow.play();
-      setTimeout(() => {
-        setStyle(
-          {...style, yellow: 'yellow'}
-        );
-      }, "300");
+    sounds.yellow.play();
+
+    if (status === true) { //=> When the sequence stops and it's the player's turn.
+      playerMoves(condition);
+    }
+
+    setTimeout(() => {
+      setStyle(
+        {...style, yellow: 'yellow'}
+      );
+    }, "300");
     }
 
     if (condition === 'strict') {
