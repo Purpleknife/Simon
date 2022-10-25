@@ -4,9 +4,10 @@ Simon is a game of short-term memory skill invented by Ralph H. Baer and Howard 
 
 <strong><h3>✅ This project's goals are:</h3></strong>
 1. Learn how to create a game app (My first one!).
-2. Learn how to add audio to an app.
-3. Learn how to create code sequences/ patterns.
-4. Maybe add a Login and Register so the user can keep track of their score.
+2. Practice timed events with setTimeout and setInterval.
+3. Learn how to add audio to an app.
+4. Learn how to create code sequences/ patterns.
+5. Maybe add a Login and Register so the user can keep track of their score.
 
 ## Features
 - Game has 4 colored buttons (Green, Red, Yellow, Blue) they can press.
