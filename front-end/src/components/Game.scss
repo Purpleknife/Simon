@@ -22,18 +22,19 @@
 
     #level {
       color: white;
-      font-family: $third-font;
-      font-size: 25px;
+      font-family: $clock;
+      font-size: 21px;
       padding-bottom: 1em;
+      color: $green;
     }
 
     #time {
       font-family: $clock;
       color: $green;
       position: relative;
-      width: 60px;
+      width: 67px;
       height: 35px;
-      border-radius: 10px;
+      border-radius: 8px;
       background-color: grey;
       padding-top: 0.3em;
     }
@@ -59,22 +60,24 @@
       .green {
         border: 8px solid $green;
         background-color: black;
-        width: 14em;
+        width: 16em;
         height: 14em;
         border-radius: 50%;
         cursor: pointer;
-        margin-right: 10em;
+        margin-right: 7em;
       }
 
       .mid {
         margin-top: 5em;
+        width: 20%;
 
         #count {
           position: relative;
           width: 57px;
           height: 35px;
-          border-radius: 10px;
+          border-radius: 8px;
           background-color: grey;
+          margin-left: 2.8em;
           
           span {
             position: absolute;
@@ -97,22 +100,45 @@
         
         
         .start {
+          display: inline-block;
           height: 4em;
-          font-family: $third-font;
+          font-family: $clock;
           height: 2em;
           font-weight: bold;
           border-radius: 4px;
+          background-color: white;
+          border-color: white;
+          text-shadow: 0 0.5 0.5em white ;
+          opacity: 1.7;
+          box-shadow: inset 0 0 1em 0 white,
+          0 0 2.8em 0 white;
         }
+
+        .strict {
+          display: inline-block;
+          height: 4em;
+          font-family: $clock;
+          height: 2em;
+          font-weight: bold;
+          border-radius: 4px;
+          background-color: $yellow;
+          border-color: $yellow;
+          text-shadow: 0 0.5 0.5em $yellow ;
+          opacity: 1.7;
+          // box-shadow: inset 0 0 1em 0 $yellow,
+          // 0 0 2.8em 0 $yellow;
+        }
+
       }
     
       .blue {
         border: 8px solid $blue;
         background-color: black;
-        width: 14em;
+        width: 16em;
         height: 14em;
         border-radius: 50%;
         cursor: pointer;
-        margin-left: 10em;
+        margin-left: 7em;
       }
     }
   
@@ -129,6 +155,21 @@
   
   
   }
+}
+
+.strict-neon {
+  display: inline-block;
+  height: 4em;
+  font-family: $clock;
+  height: 2em;
+  font-weight: bold;
+  border-radius: 4px;
+  background-color: $yellow;
+  border-color: $yellow;
+  text-shadow: 0 0.5 0.5em $yellow ;
+  opacity: 1.7;
+  box-shadow: inset 0 0 1em 0 $yellow,
+  0 0 2.8em 0 $yellow;
 }
 
 .red-neon {
@@ -153,10 +194,10 @@
 .green-neon {
   border: 8px solid $green;
   background-color: black;
-  width: 14em;
+  width: 16em;
   height: 14em;
   border-radius: 50%;
-  margin-right: 10em;
+  margin-right: 7em;
   text-align: center;
   cursor: pointer;
   display: flex;
@@ -173,10 +214,10 @@
 .blue-neon {
   border: 8px solid $blue;
   background-color: black;
-  width: 14em;
+  width: 16em;
   height: 14em;
   border-radius: 50%;
-  margin-left: 10em;
+  margin-left: 7em;
   text-align: center;
   cursor: pointer;
   display: flex;

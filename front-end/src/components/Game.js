@@ -9,6 +9,16 @@ const Game = () => {
   const [greenStyle, setGreenStyle] = useState('green');
   const [blueStyle, setBlueStyle] = useState('blue');
   const [yellowStyle, setYellowStyle] = useState('yellow');
+  const [strictStyle, setStrictStyle] = useState('strict');
+
+  const [game, setGame] = useState({
+    active: false,
+    level: 1,
+    time: '00:00',
+    count: 0,
+    strict: false
+  });
+
 
   const changeStyle = (condition) => {
     if (condition === 'red') {
@@ -35,6 +45,9 @@ const Game = () => {
         setYellowStyle('yellow');
       }, "700");
     }
+    if (condition === 'strict') {
+      setStrictStyle('strict-neon');
+    }
   };
 
   return (
@@ -44,8 +57,8 @@ const Game = () => {
       </div>
       
       <div className='game'>
-        <span id='level'>Level 1 / 20</span>
-        <div id='time'><span>12:30</span></div><br />
+        <span id='level'><i class="fa-solid fa-caret-right"></i>  Level 1 / 20</span>
+        <div id='time'><span>00:00</span></div><br />
         <button className={redStyle} onClick={() => changeStyle('red')}></button>
         <div className='middle'>
           <button className={greenStyle} onClick={() => changeStyle('green')}></button>
@@ -55,7 +68,10 @@ const Game = () => {
               <span>00</span><br />
               <label>Count</label>
             </div><br />
-            <button className="start">Start</button>
+
+              <button className="start">Start</button>&nbsp;&nbsp;
+              <button className={strictStyle} onClick={() => changeStyle('strict')}>Strict</button>
+
           </div>
 
           <button className={blueStyle} onClick={() => changeStyle('blue')}></button>
