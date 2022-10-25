@@ -17,3 +17,6 @@ Simon is a game of short-term memory skill invented by Ralph H. Baer and Howard 
 - Pattern should be displayed after a specific interval.
 - Display a correct counter.
 - Add Login/ Register so the user can keep track of their score.
+- Add 2 modes to the Game to make it more complex:
+  - Strict mode: restarts the game whenever you select the wrong field in a pattern.
+  - Normal mode: repeats the pattern subsequent of the wrong button being pressed.
