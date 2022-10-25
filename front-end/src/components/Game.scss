@@ -1,4 +1,5 @@
 @import "../styles/variables";
+@import "~bootstrap/scss/bootstrap";
 
 .container {
   // display: flex;
@@ -14,14 +15,32 @@
     //flex-flow: column;
     flex-direction: column;
     justify-content: center;
-    margin-top: 7em;
+    margin-top: 3em;
     align-items: center;
-    margin-left: 42em;
+    margin-left: 29em;
     width: 30%;
+
+    #level {
+      color: white;
+      font-family: $third-font;
+      font-size: 25px;
+      padding-bottom: 1em;
+    }
+
+    #time {
+      font-family: $clock;
+      color: $green;
+      position: relative;
+      width: 60px;
+      height: 35px;
+      border-radius: 10px;
+      background-color: grey;
+      padding-top: 0.3em;
+    }
     
   
     .red {
-      border: 5px solid red;
+      border: 8px solid $red;
       background-color: black;
       width: 14em;
       height: 14em;
@@ -38,7 +57,7 @@
       justify-content: space-between;
 
       .green {
-        border: 5px solid green;
+        border: 8px solid $green;
         background-color: black;
         width: 14em;
         height: 14em;
@@ -47,13 +66,47 @@
         margin-right: 10em;
       }
 
-      .start {
-        height: 4em;
+      .mid {
         margin-top: 5em;
+
+        #count {
+          position: relative;
+          width: 57px;
+          height: 35px;
+          border-radius: 10px;
+          background-color: grey;
+          
+          span {
+            position: absolute;
+            font-size: 20px;
+            font-family: $clock;
+            font-weight: bold;
+            color: rgb(61, 61, 61);
+            text-align: center;
+            display: flex;
+            padding-left: 0.6em;
+            padding-top: 0.1em;
+          }
+
+          label {
+            color: white;
+            font-family: $clock2;
+            padding-top: 0.5em;
+          }
+        }
+        
+        
+        .start {
+          height: 4em;
+          font-family: $third-font;
+          height: 2em;
+          font-weight: bold;
+          border-radius: 4px;
+        }
       }
     
       .blue {
-        border: 5px solid blue;
+        border: 8px solid $blue;
         background-color: black;
         width: 14em;
         height: 14em;
@@ -64,7 +117,7 @@
     }
   
     .yellow {
-      border: 5px solid yellow;
+      border: 8px solid $yellow;
       background-color: black;
       width: 14em;
       height: 14em;
@@ -78,4 +131,79 @@
   }
 }
 
+.red-neon {
+  border: 8px solid $red;
+  background-color: black;
+  width: 14em;
+  height: 14em;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
 
+  text-shadow: 0 0.5 0.5em $red ;
+  opacity: 1.7;
+  box-shadow: inset 0 0 1em 0 $red,
+  0 0 2.8em 0 $red;
+
+  position: relative;
+}
+
+.green-neon {
+  border: 8px solid $green;
+  background-color: black;
+  width: 14em;
+  height: 14em;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  text-shadow: 0 0.5 0.5em $green ;
+  opacity: 1.7;
+  box-shadow: inset 0 0 1em 0 $green,
+  0 0 2.8em 0 $green;
+
+  position: relative;
+}
+
+.blue-neon {
+  border: 8px solid $blue;
+  background-color: black;
+  width: 14em;
+  height: 14em;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  text-shadow: 0 0.5 0.5em $blue ;
+  opacity: 1.7;
+  box-shadow: inset 0 0 1em 0 $blue,
+  0 0 2.8em 0 $blue;
+
+  position: relative;
+}
+
+
+.yellow-neon {
+  border: 8px solid $yellow;
+  background-color: black;
+  width: 14em;
+  height: 14em;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  text-shadow: 0 0.5 0.5em $yellow ;
+  opacity: 1.7;
+  box-shadow: inset 0 0 1em 0 $yellow,
+  0 0 2.8em 0 $yellow;
+
+  position: relative;
+}

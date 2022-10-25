@@ -1,4 +1,5 @@
 @import "../styles/variables";
+@import "~bootstrap/scss/bootstrap";
 
 .intro {
   color: white;
@@ -6,5 +7,61 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //margin-right: -9em;
+  margin-top: 2em;
+
+  p {
+    font-family: $primary-font;
+    font-size: 35px;
+    font-weight: bold;
+  }
+
+}
+
+.info {
+  margin-right: -100em;
+  margin-top: -4em;
+
+  .instructions {
+    background-color: $red !important;
+    border-color: $red !important;
+    font-family: $third-font;
+
+  }
+
+  .login {
+    background-color: grey;
+    width: 6em;
+    height: 2.5em;
+    border-radius: 5px;
+    font-family: $third-font;
+  }
+
+  .register {
+    background-color: grey;
+    width: 6em;
+    height: 2.5em;
+    border-radius: 5px;
+    font-family: $third-font;
+  }
+
+}
+
+#fun {
+  color: $red;
+}
+.close {
+  background-color: $red !important;
+  border-color: $red !important;
+  font-family: $third-font;
+}
+
+.modal-header {
+  border-bottom: none !important;
+  font-family: $primary-font;
+  margin-left: 7em;
+  font-weight: bolder;
+}
+
+.modal-body {
+  font-family: $third-font;
 }

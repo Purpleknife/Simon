@@ -12,10 +12,20 @@ const Game = () => {
       </div>
       
       <div className='game'>
+        <span id='level'>Level 1 / 20</span>
+        <div id='time'><span>12:30</span></div><br />
         <button className="red"></button>
         <div className='middle'>
           <button className="green"></button>
-          <button className="start">Start</button>
+
+          <div className='mid'>
+            <div id='count'>
+              <span>00</span><br />
+              <label>Count</label>
+            </div><br />
+            <button className="start">Start</button>
+          </div>
+
           <button className="blue"></button>
         </div>
         <button className="yellow"></button>
