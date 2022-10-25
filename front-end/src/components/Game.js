@@ -68,6 +68,11 @@ const Game = () => {
         {...style, strict: 'strict-neon'}
       );
     }
+    if (condition === 'strict-neon') {
+      setStyle(
+        {...style, strict: 'strict'}
+      );
+    }
   };
 
   return (
@@ -90,7 +95,13 @@ const Game = () => {
             </div><br />
 
               <button className="start">Start</button>&nbsp;&nbsp;
-              <button className={style.strict} onClick={() => changeStyle('strict')}>Strict</button>
+              <button className={style.strict} onClick={() => { 
+                if (style.strict === 'strict') {
+                  return changeStyle('strict');
+                }
+                changeStyle('strict-neon');
+                }}>
+                Strict</button>
 
           </div>
 
