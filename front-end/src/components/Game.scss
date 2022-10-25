@@ -174,7 +174,7 @@
 
 .red-neon {
   border: 8px solid $red;
-  background-color: black;
+  background-color: $red;
   width: 14em;
   height: 14em;
   border-radius: 50%;
@@ -193,7 +193,7 @@
 
 .green-neon {
   border: 8px solid $green;
-  background-color: black;
+  background-color: $green;
   width: 16em;
   height: 14em;
   border-radius: 50%;
@@ -213,7 +213,7 @@
 
 .blue-neon {
   border: 8px solid $blue;
-  background-color: black;
+  background-color: $blue;
   width: 16em;
   height: 14em;
   border-radius: 50%;
@@ -234,7 +234,7 @@
 
 .yellow-neon {
   border: 8px solid $yellow;
-  background-color: black;
+  background-color: $yellow;
   width: 14em;
   height: 14em;
   border-radius: 50%;
