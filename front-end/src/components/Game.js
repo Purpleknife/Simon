@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Intro from './Intro';
 
-import { shuffle } from '../helpers/helpers';
+import { shuffle, eqArrays } from '../helpers/helpers';
 
 import './Game.scss';
 
@@ -50,6 +50,15 @@ const Game = () => {
 
     console.log('sequence should be TRUE', status);
 
+    console.log('strict', game.strict);
+
+    setTimeout(() => {
+      setPlayerTurnOver(true);
+    }, '3500');
+
+    if (playerTurnOver === true) { //=> Means the player's turn is over.
+      check();
+    };
     
     
   };
@@ -57,6 +66,29 @@ const Game = () => {
   useEffect(() => {
     start();
   }, []);
+
+  const check = () => {
+    //setTimeout(() => {
+      if (!eqArrays(game.playerInput, game.actualGame)) {
+        if (game.strict) {
+          alert('Its strict mode. Try again from scratch');
+          clearGame();
+        } else {
+          alert('Wrong move. Try again.');
+          playSequence(game.actualGame);
+        }
+      } else {
+        if (level < 20) {
+          alert('Welcome to the next level.');
+          playSequence(game.actualGame);
+        }
+        if (level === 20) {
+          alert('You won the game after 20 levels!');
+          clearGame();
+        }
+      }
+    //}, '3600');
+  }
   
   //Function that plays the sounds and triggers changeStyle() with an interval:
   const playSequence = (arr) => {
@@ -75,6 +107,7 @@ const Game = () => {
       setStatus(true); //=> Means that it's the player's turn now. playerMoves can now run.
     }, '3000');
     
+   
   };
 
   const playerMoves = (button) => {
@@ -84,11 +117,6 @@ const Game = () => {
       ...game, 
       playerInput: [...game.playerInput, button]
     });
-
-
-    if (game.playerInput.length === game.actualGame) {
-      clearGame();
-    }
 
     //console.log('game', game);
     console.log('player Input', game.playerInput);
@@ -174,17 +202,29 @@ const Game = () => {
     }, "300");
     }
 
+    
+  };
+
+  const chooseStrict = (condition) => {
     if (condition === 'strict') {
       setStyle(
         {...style, strict: 'strict-neon'}
       );
+      setGame({
+        ...game,
+        strict: true
+      });
     }
     if (condition === 'strict-neon') {
       setStyle(
         {...style, strict: 'strict'}
       );
+      setGame({
+        ...game,
+        strict: false
+      });
     }
-  };
+  }
 
   return (
     <div className='container'>
@@ -208,9 +248,9 @@ const Game = () => {
               <button onClick={start} className="start">Start</button>&nbsp;&nbsp;
               <button className={style.strict} onClick={() => { 
                 if (style.strict === 'strict') {
-                  return changeStyle('strict');
+                  return chooseStrict('strict');
                 }
-                changeStyle('strict-neon');
+                chooseStrict('strict-neon');
                 }}>
                 Strict</button>
 
