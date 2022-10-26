@@ -75,6 +75,7 @@ const Game = () => {
     } 
     if (eqArrays(playerInput, game.actualGame) === true) {
       if (level < 20) {
+        //setStatus(false);
         alert('Welcome to the next level.');
         setLevel(prev => prev + 1);
         clearGame();
@@ -112,7 +113,7 @@ const Game = () => {
     setPlayerInput(prev => [...prev, button]);
     
   };
-
+  
 
   useEffect(() => {
     console.log('player input state', playerInput);
