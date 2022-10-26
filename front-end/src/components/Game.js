@@ -31,7 +31,6 @@ const Game = () => {
     active: false,
     time: '00:00',
     strict: false,
-    playerInput: [],
     gameRandomOutput: ['red', 'green', 'blue', 'yellow'],
     actualGame: []
   });
@@ -45,11 +44,6 @@ const Game = () => {
     
     
     playSequence(game.actualGame);
-    
-
-
-    
-    //setStatus(true); //=> Means that it's the player's turn now.
 
     console.log('sequence should be TRUE', status);
 
@@ -102,26 +96,28 @@ const Game = () => {
     for (let i = 0; i < arr.length; i++) {
       if (i < arr.length){
         setTimeout(() => {
+          console.log(arr[i]);
           changeStyle(arr[i]);
         }, 600 * i);
       }
-
       setStatus(true); //=> Means it's the player's turn.
     }
    
   };
 
+  const [playerInput, setPlayerInput] = useState([]);
+
   const playerMoves = (button) => {
     setCount(prev => prev + 1);
+    setPlayerInput(prev => [...prev, button]);
 
-    setGame({
-      ...game, 
-      playerInput: [...game.playerInput, button]
-    });
-
-    //console.log('game', game);
-    console.log('player Input', game.playerInput);
   };
+
+  //console.log('player Input OUTSIDE', playerInput);
+
+  useEffect(() => {
+    console.log('player input state', playerInput);
+  }, [playerInput]);
   
   const clearGame = () => {
     setGame({
