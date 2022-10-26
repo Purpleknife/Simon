@@ -43,70 +43,71 @@ const Game = () => {
       actualGame: shuffle(game.gameRandomOutput)
     });
     
-    setLevel(prev => prev + 1);
     
     playSequence(game.actualGame);
+    
+
+
+    
     //setStatus(true); //=> Means that it's the player's turn now.
 
     console.log('sequence should be TRUE', status);
 
     console.log('strict', game.strict);
 
-    setTimeout(() => {
-      setPlayerTurnOver(true);
-    }, '3500');
+    // setTimeout(() => {
+    //   setPlayerTurnOver(true);
+    // }, '3500');
 
-    if (playerTurnOver === true) { //=> Means the player's turn is over.
-      check();
-    };
+    // if (playerTurnOver === true) { //=> Means the player's turn is over.
+    //   check();
+    // };
     
     
   };
+
 
   useEffect(() => {
     start();
   }, []);
 
-  const check = () => {
-    //setTimeout(() => {
-      if (!eqArrays(game.playerInput, game.actualGame)) {
-        if (game.strict) {
-          alert('Its strict mode. Try again from scratch');
-          clearGame();
-        } else {
-          alert('Wrong move. Try again.');
-          playSequence(game.actualGame);
-        }
-      } else {
-        if (level < 20) {
-          alert('Welcome to the next level.');
-          playSequence(game.actualGame);
-        }
-        if (level === 20) {
-          alert('You won the game after 20 levels!');
-          clearGame();
-        }
-      }
-    //}, '3600');
-  }
+  // const check = () => {
+  //   //setTimeout(() => {
+  //     if (!eqArrays(game.playerInput, game.actualGame)) {
+  //       if (game.strict) {
+  //         alert('Its strict mode. Try again from scratch');
+  //         clearGame();
+  //       } else {
+  //         alert('Wrong move. Try again.');
+  //         playSequence(game.actualGame);
+  //       }
+  //     } else {
+  //       if (level < 20) {
+  //         alert('Welcome to the next level.');
+  //         playSequence(game.actualGame);
+  //       }
+  //       if (level === 20) {
+  //         alert('You won the game after 20 levels!');
+  //         clearGame();
+  //       }
+  //     }
+  //   //}, '3600');
+  // }
+
+
   
   //Function that plays the sounds and triggers changeStyle() with an interval:
   const playSequence = (arr) => {
-    let i = 0;
-
-    const pattern = setInterval(() => {
-      console.log(arr[i]);
-      changeStyle(arr[i]);
-      i++;
-      if (i >= arr.length) {
-        clearInterval(pattern);
+    setLevel(prev => prev + 1);
+    for (let i = 0; i < arr.length; i++) {
+      if (i < arr.length){
+        setTimeout(() => {
+          changeStyle(arr[i]);
+        }, 600 * i);
       }
-    }, 600);
-    
-    setTimeout(() => {
-      setStatus(true); //=> Means that it's the player's turn now. playerMoves can now run.
-    }, '3000');
-    
+
+      setStatus(true); //=> Means it's the player's turn.
+    }
    
   };
 
@@ -129,7 +130,7 @@ const Game = () => {
       playerInput: []
     });
     setCount(0);
-    setStatus(false);
+    //setStatus(false);
   }
 
 
