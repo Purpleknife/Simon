@@ -22,10 +22,11 @@ const Game = () => {
     yellow: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
   };
 
-  const [level, setLevel] = useState(0);
+  const [level, setLevel] = useState(1);
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState(false);
   const [playerTurnOver, setPlayerTurnOver] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const [game, setGame] = useState({
     active: false,
@@ -35,64 +36,63 @@ const Game = () => {
     actualGame: []
   });
 
+  const gameIsActive = () => {
+    setIsActive(true);
+  }
+
 
   const start = () => {
+    console.log('start runs');
     setGame({
       ...game, 
       actualGame: shuffle(game.gameRandomOutput)
     });
     
-    
+    console.log('is active', game.active);
+
     playSequence(game.actualGame);
-
-    console.log('sequence should be TRUE', status);
-
-    console.log('strict', game.strict);
-
-    // setTimeout(() => {
-    //   setPlayerTurnOver(true);
-    // }, '3500');
-
-    // if (playerTurnOver === true) { //=> Means the player's turn is over.
-    //   check();
-    // };
-    
     
   };
 
 
   useEffect(() => {
-    start();
-  }, []);
+    if (isActive) {
+      start();
+    }
+    console.log('actual game', game.actualGame);
+  }, [isActive]);
 
-  // const check = () => {
-  //   //setTimeout(() => {
-  //     if (!eqArrays(game.playerInput, game.actualGame)) {
-  //       if (game.strict) {
-  //         alert('Its strict mode. Try again from scratch');
-  //         clearGame();
-  //       } else {
-  //         alert('Wrong move. Try again.');
-  //         playSequence(game.actualGame);
-  //       }
-  //     } else {
-  //       if (level < 20) {
-  //         alert('Welcome to the next level.');
-  //         playSequence(game.actualGame);
-  //       }
-  //       if (level === 20) {
-  //         alert('You won the game after 20 levels!');
-  //         clearGame();
-  //       }
-  //     }
-  //   //}, '3600');
-  // }
+  const check = () => {
+    console.log('check runs');
+    if (eqArrays(playerInput, game.actualGame) === false) {
+      if (game.strict) {
+        alert('Its strict mode. Try again from scratch');
+        clearGame();
+      } else {
+        alert('Wrong move. Try again.');
+        playSequence(game.actualGame);
+      }
+    } 
+    if (eqArrays(playerInput, game.actualGame) === true) {
+      if (level < 20) {
+        alert('Welcome to the next level.');
+        setLevel(prev => prev + 1);
+        clearGame();
+        playSequence(game.actualGame);
+      }
+      if (level === 20) {
+        alert('You won the game after 20 levels!');
+        clearGame();
+      }
+    }
+  }
 
 
   
   //Function that plays the sounds and triggers changeStyle() with an interval:
   const playSequence = (arr) => {
-    setLevel(prev => prev + 1);
+    console.log('playSequence runs');
+    
     for (let i = 0; i < arr.length; i++) {
       if (i < arr.length){
         setTimeout(() => {
@@ -110,23 +110,30 @@ const Game = () => {
   const playerMoves = (button) => {
     setCount(prev => prev + 1);
     setPlayerInput(prev => [...prev, button]);
-
+    
   };
 
-  //console.log('player Input OUTSIDE', playerInput);
 
   useEffect(() => {
     console.log('player input state', playerInput);
+    console.log('status', status);
+    //console.log('playerTurnOver', playerTurnOver);
+    if (playerInput.length === game.actualGame.length && game.actualGame.length > 0 && playerInput.length > 0) { //=> Means the player's turn is over.
+      check();
+    };
   }, [playerInput]);
   
+
+  //To reset the game:
   const clearGame = () => {
+    setStatus(false); // => DOESN'T WORK !!
+    console.log('CLEAR GAME RUNS!!');
     setGame({
       ...game, 
-      actualGame: [],
-      playerInput: []
+      actualGame: []
     });
+    setPlayerInput([]);
     setCount(0);
-    //setStatus(false);
   }
 
 
@@ -242,7 +249,7 @@ const Game = () => {
               <label>Count</label>
             </div><br />
 
-              <button onClick={start} className="start">Start</button>&nbsp;&nbsp;
+              <button onClick={() => {start(); gameIsActive()}} className="start">Start</button>&nbsp;&nbsp;
               <button className={style.strict} onClick={() => { 
                 if (style.strict === 'strict') {
                   return chooseStrict('strict');
