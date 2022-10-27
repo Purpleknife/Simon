@@ -89,9 +89,6 @@ const Game = () => {
     }
   };
 
-  // useEffect(() => {
-  //   check(); //=> Should run everytime the game sequence is played.
-  // }, [playSequence(game.actualGame)])
 
   //To reset the game:
   const clearGame = () => {
@@ -155,10 +152,6 @@ const Game = () => {
         {...style, red: 'red-neon'},
       );
     sounds.red.play();
-    
-    // if (status === true) { //=> When the sequence stops and it's the player's turn.
-    //   playerMoves(condition);
-    // }
 
     setTimeout(() => {
       setStyle(
@@ -173,10 +166,6 @@ const Game = () => {
       );
     sounds.green.play();
 
-    // if (status === true) { //=> When the sequence stops and it's the player's turn.
-    //   playerMoves(condition);
-    // }
-
     setTimeout(() => {
       setStyle(
         {...style, green: 'green'}
@@ -190,10 +179,6 @@ const Game = () => {
       );
     sounds.blue.play();
 
-    // if (status === true) { //=> When the sequence stops and it's the player's turn.
-    //   playerMoves(condition);
-    // }
-
     setTimeout(() => {
       setStyle(
         {...style, blue: 'blue'}
@@ -206,10 +191,6 @@ const Game = () => {
         {...style, yellow: 'yellow-neon'}
       );
     sounds.yellow.play();
-
-    // if (status === true) { //=> When the sequence stops and it's the player's turn.
-    //   playerMoves(condition);
-    // }
 
     setTimeout(() => {
       setStyle(
