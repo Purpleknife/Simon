@@ -7,13 +7,13 @@ import './App.css';
 
 const App = () => {
   return (
-    <React.StrictMode>
+
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Game />} />
         </Routes>      
       </BrowserRouter>
-    </React.StrictMode>
+
   );
 }
  
