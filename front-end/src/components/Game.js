@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Intro from './Intro';
 
-import { shuffle, eqArrays } from '../helpers/helpers';
+import { shuffle, complexShuffle, eqArrays } from '../helpers/helpers';
 
 import './Game.scss';
 
@@ -74,13 +74,11 @@ const Game = () => {
     } 
     if (eqArrays(playerInput, game.actualGame) === true) {
       if (level < 20) {
-        //if (status === true) {
-          //setStatus(false);
-          alert('Welcome to the next level.');
-          clearGame();
-          setLevel(prev => prev + 1);
-          playSequence(game.actualGame);
-        //}
+        alert('Welcome to the next level.');
+        clearGame();
+        setLevel(prev => prev + 1);
+        playSequence(game.actualGame);
+
       }
       if (level === 20) {
         alert('You won the game after 20 levels!');
@@ -107,15 +105,43 @@ const Game = () => {
   const playSequence = (arr) => {
     console.log('playSequence runs');
 
-    setGame({
-      ...game, 
-      actualGame: shuffle(game.gameRandomOutput)
-    });
+    if (level >= 1 && level <= 5) {
+      let arr = shuffle(game.gameRandomOutput);
+
+      setGame({
+        ...game, 
+        actualGame: complexShuffle(arr, 'lvl 1 to 5')
+      });
+    }
+    if (level >= 6 && level <= 10) {
+      let arr = shuffle(game.gameRandomOutput);
+
+      setGame({
+        ...game, 
+        actualGame: complexShuffle(arr, 'lvl 5 to 10')
+      });
+    }
+    if (level >= 11 && level <= 15) {
+      let arr = shuffle(game.gameRandomOutput);
+
+      setGame({
+        ...game, 
+        actualGame: complexShuffle(arr, 'lvl 10 to 15')
+      });
+    }
+    if (level >= 16 && level <= 20) {
+      let arr = shuffle(game.gameRandomOutput);
+
+      setGame({
+        ...game, 
+        actualGame: complexShuffle(arr, 'lvl 15 to 20')
+      });
+    }    
     
     for (let i = 0; i < arr.length; i++) {
       if (i < arr.length){
         setTimeout(() => {
-          console.log(arr[i]);
+          //console.log(arr[i]);
           changeStyle(arr[i]);
         }, 600 * i);
       }
