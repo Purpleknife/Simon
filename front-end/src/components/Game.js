@@ -43,10 +43,6 @@ const Game = () => {
 
   const start = () => {
     console.log('start runs');
-    setGame({
-      ...game, 
-      actualGame: shuffle(game.gameRandomOutput)
-    });
     
     console.log('is active', game.active);
 
@@ -59,7 +55,7 @@ const Game = () => {
     if (isActive) {
       start();
     }
-    console.log('actual game', game.actualGame);
+    
   }, [isActive]);
 
   const check = () => {
@@ -68,8 +64,11 @@ const Game = () => {
       if (game.strict) {
         alert('Its strict mode. Try again from scratch');
         clearGame();
+        setLevel(1);
+        playSequence(game.actualGame);
       } else {
         alert('Wrong move. Try again.');
+        clearGame();
         playSequence(game.actualGame);
       }
     } 
@@ -78,8 +77,8 @@ const Game = () => {
         //if (status === true) {
           //setStatus(false);
           alert('Welcome to the next level.');
-          setLevel(prev => prev + 1);
           clearGame();
+          setLevel(prev => prev + 1);
           playSequence(game.actualGame);
         //}
       }
@@ -104,12 +103,17 @@ const Game = () => {
     });
     setPlayerInput([]);
     setCount(0);
-  }
+  };
 
   
   //Function that plays the sounds and triggers changeStyle() with an interval:
   const playSequence = (arr) => {
     console.log('playSequence runs');
+
+    setGame({
+      ...game, 
+      actualGame: shuffle(game.gameRandomOutput)
+    });
     
     for (let i = 0; i < arr.length; i++) {
       if (i < arr.length){
@@ -134,13 +138,14 @@ const Game = () => {
   
 
   useEffect(() => {
+    console.log('actual game', game.actualGame);
     console.log('player input state', playerInput);
-    console.log('status', status);
+    //console.log('status', status);
     //console.log('playerTurnOver', playerTurnOver);
     if (playerInput.length === game.actualGame.length && game.actualGame.length > 0 && playerInput.length > 0) { //=> Means the player's turn is over.
       check();
     };
-  }, [playerInput]);
+  }, [playerInput, game.actualGame]);
   
 
 
