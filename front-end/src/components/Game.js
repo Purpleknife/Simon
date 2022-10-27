@@ -42,17 +42,19 @@ const Game = () => {
 
 
   const start = () => {
-    console.log('start runs');
     
-    console.log('is active', game.active);
+    console.log('start runs');
+    //setIsActive(true);
+    //console.log('is active', game.active);
 
-    playSequence(game.actualGame);
+    playSequence();
     
   };
 
 
   useEffect(() => {
     if (isActive) {
+      //decideOutput();
       start();
     }
     
@@ -65,11 +67,11 @@ const Game = () => {
         alert('Its strict mode. Try again from scratch');
         clearGame();
         setLevel(1);
-        playSequence(game.actualGame);
+        playSequence();
       } else {
         alert('Wrong move. Try again.');
         clearGame();
-        playSequence(game.actualGame);
+        playSequence();
       }
     } 
     if (eqArrays(playerInput, game.actualGame) === true) {
@@ -77,8 +79,7 @@ const Game = () => {
         alert('Welcome to the next level.');
         clearGame();
         setLevel(prev => prev + 1);
-        playSequence(game.actualGame);
-
+        playSequence();
       }
       if (level === 20) {
         alert('You won the game after 20 levels!');
@@ -100,55 +101,70 @@ const Game = () => {
     setCount(0);
   };
 
-  
-  //Function that plays the sounds and triggers changeStyle() with an interval:
-  const playSequence = (arr) => {
-    console.log('playSequence runs');
+
+  const decideOutput = () => { //=> Maybe the error comes from here!!! It runs 2 times instead of 1.
+    let arr = shuffle(game.gameRandomOutput);
 
     if (level >= 1 && level <= 5) {
-      let arr = shuffle(game.gameRandomOutput);
-
-      setGame({
-        ...game, 
-        actualGame: complexShuffle(arr, 'lvl 1 to 5')
-      });
+      return complexShuffle(arr, 'lvl 1 to 5');
     }
     if (level >= 6 && level <= 10) {
-      let arr = shuffle(game.gameRandomOutput);
-
-      setGame({
-        ...game, 
-        actualGame: complexShuffle(arr, 'lvl 5 to 10')
-      });
+      return complexShuffle(arr, 'lvl 5 to 10');
     }
     if (level >= 11 && level <= 15) {
-      let arr = shuffle(game.gameRandomOutput);
-
-      setGame({
-        ...game, 
-        actualGame: complexShuffle(arr, 'lvl 10 to 15')
-      });
+      return complexShuffle(arr, 'lvl 10 to 15');
     }
     if (level >= 16 && level <= 20) {
-      let arr = shuffle(game.gameRandomOutput);
+      return complexShuffle(arr, 'lvl 15 to 20');
+    }
+  }
 
+  
+  //Function that plays the sounds and triggers changeStyle() with an interval:
+  const playSequence = () => {
+    console.log('playSequence runs');
+    console.log('decideOutput', decideOutput());
+    console.log('playSequence actual game', game.actualGame)
+    //if (isActive) {
       setGame({
         ...game, 
-        actualGame: complexShuffle(arr, 'lvl 15 to 20')
+        actualGame: decideOutput()
       });
-    }    
+    //}
+
+    // setGame({
+    //   ...game, 
+    //   actualGame: shuffle(game.gameRandomOutput)
+    // });
     
-    for (let i = 0; i < arr.length; i++) {
-      if (i < arr.length){
-        setTimeout(() => {
-          //console.log(arr[i]);
-          changeStyle(arr[i]);
-        }, 600 * i);
-      }
-      //setStatus(true); //=> Means it's the player's turn.
+    const doSetTimeout = (item, index) => {
+      setTimeout(() => {
+        console.log(item);
+        changeStyle(item);
+      }, 600 * index);
     }
-   
+        
+    let newArr = game.actualGame;
+    for (let i = 0; i < newArr.length; i++) {
+      doSetTimeout(newArr[i], i);
+      // setTimeout(() => {
+      //   console.log(newArr[i]);
+      //   changeStyle(newArr[i]);
+      // }, 600 * i);
+    }
+
   };
+
+  // const doSetTimeout = (arr) => {
+  //   let i = 0;
+  //   const interval = setInterval(() => {
+  //     changeStyle(arr[i]);
+  //     i++;
+  //     if (i >= arr.length) {
+  //       clearInterval(interval);
+  //     }
+  //   }, 1000 * i)
+  //  }
 
   const [playerInput, setPlayerInput] = useState([]);
 
@@ -158,13 +174,12 @@ const Game = () => {
     setPlayerInput(prev => [...prev, button]);
     
   };
-  
+
 
   useEffect(() => {
-    console.log('actual game', game.actualGame);
     console.log('player input state', playerInput);
-    //console.log('status', status);
-    //console.log('playerTurnOver', playerTurnOver);
+    console.log('actual game', game.actualGame);
+
     if (playerInput.length === game.actualGame.length && game.actualGame.length > 0 && playerInput.length > 0) { //=> Means the player's turn is over.
       check();
     };
@@ -248,7 +263,7 @@ const Game = () => {
       });
     }
   }
-
+  // () => {gameIsActive(); start()}
   return (
     <div className='container'>
       <div className='intro_game'>
@@ -268,7 +283,7 @@ const Game = () => {
               <label>Count</label>
             </div><br />
 
-              <button onClick={() => {start(); gameIsActive()}} className="start">Start</button>&nbsp;&nbsp;
+              <button onClick={() => {gameIsActive(); start()}} className="start">Start</button>&nbsp;&nbsp;
               <button className={style.strict} onClick={() => { 
                 if (style.strict === 'strict') {
                   return chooseStrict('strict');
