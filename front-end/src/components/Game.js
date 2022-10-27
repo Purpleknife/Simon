@@ -75,19 +75,36 @@ const Game = () => {
     } 
     if (eqArrays(playerInput, game.actualGame) === true) {
       if (level < 20) {
-        //setStatus(false);
-        alert('Welcome to the next level.');
-        setLevel(prev => prev + 1);
-        clearGame();
-        playSequence(game.actualGame);
+        //if (status === true) {
+          //setStatus(false);
+          alert('Welcome to the next level.');
+          setLevel(prev => prev + 1);
+          clearGame();
+          playSequence(game.actualGame);
+        //}
       }
       if (level === 20) {
         alert('You won the game after 20 levels!');
         clearGame();
       }
     }
-  }
+  };
 
+  // useEffect(() => {
+  //   check(); //=> Should run everytime the game sequence is played.
+  // }, [playSequence(game.actualGame)])
+
+  //To reset the game:
+  const clearGame = () => {
+    //setStatus(false); // => DOESN'T WORK !!
+    console.log('CLEAR GAME RUNS!!');
+    setGame({
+      ...game, 
+      actualGame: []
+    });
+    setPlayerInput([]);
+    setCount(0);
+  }
 
   
   //Function that plays the sounds and triggers changeStyle() with an interval:
@@ -101,7 +118,7 @@ const Game = () => {
           changeStyle(arr[i]);
         }, 600 * i);
       }
-      setStatus(true); //=> Means it's the player's turn.
+      //setStatus(true); //=> Means it's the player's turn.
     }
    
   };
@@ -109,6 +126,7 @@ const Game = () => {
   const [playerInput, setPlayerInput] = useState([]);
 
   const playerMoves = (button) => {
+    changeStyle(button);
     setCount(prev => prev + 1);
     setPlayerInput(prev => [...prev, button]);
     
@@ -125,18 +143,6 @@ const Game = () => {
   }, [playerInput]);
   
 
-  //To reset the game:
-  const clearGame = () => {
-    setStatus(false); // => DOESN'T WORK !!
-    console.log('CLEAR GAME RUNS!!');
-    setGame({
-      ...game, 
-      actualGame: []
-    });
-    setPlayerInput([]);
-    setCount(0);
-  }
-
 
   const changeStyle = (condition) => {
     if (condition === 'red') {
@@ -145,9 +151,9 @@ const Game = () => {
       );
     sounds.red.play();
     
-    if (status === true) { //=> When the sequence stops and it's the player's turn.
-      playerMoves(condition);
-    }
+    // if (status === true) { //=> When the sequence stops and it's the player's turn.
+    //   playerMoves(condition);
+    // }
 
     setTimeout(() => {
       setStyle(
@@ -162,9 +168,9 @@ const Game = () => {
       );
     sounds.green.play();
 
-    if (status === true) { //=> When the sequence stops and it's the player's turn.
-      playerMoves(condition);
-    }
+    // if (status === true) { //=> When the sequence stops and it's the player's turn.
+    //   playerMoves(condition);
+    // }
 
     setTimeout(() => {
       setStyle(
@@ -179,9 +185,9 @@ const Game = () => {
       );
     sounds.blue.play();
 
-    if (status === true) { //=> When the sequence stops and it's the player's turn.
-      playerMoves(condition);
-    }
+    // if (status === true) { //=> When the sequence stops and it's the player's turn.
+    //   playerMoves(condition);
+    // }
 
     setTimeout(() => {
       setStyle(
@@ -196,9 +202,9 @@ const Game = () => {
       );
     sounds.yellow.play();
 
-    if (status === true) { //=> When the sequence stops and it's the player's turn.
-      playerMoves(condition);
-    }
+    // if (status === true) { //=> When the sequence stops and it's the player's turn.
+    //   playerMoves(condition);
+    // }
 
     setTimeout(() => {
       setStyle(
@@ -240,9 +246,9 @@ const Game = () => {
       <div className='game'>
         <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {level} / 20</span>
         <div id='time'><span>00:00</span></div><br />
-        <button className={style.red} onClick={() => changeStyle('red')}></button>
+        <button className={style.red} onClick={() => playerMoves('red')}></button>
         <div className='middle'>
-          <button className={style.green} onClick={() => changeStyle('green')}></button>
+          <button className={style.green} onClick={() => playerMoves('green')}></button>
 
           <div className='mid'>
             <div id='count'>
@@ -261,9 +267,9 @@ const Game = () => {
 
           </div>
 
-          <button className={style.blue} onClick={() => changeStyle('blue')}></button>
+          <button className={style.blue} onClick={() => playerMoves('blue')}></button>
         </div>
-        <button className={style.yellow} onClick={() => changeStyle('yellow')}></button>
+        <button className={style.yellow} onClick={() => playerMoves('yellow')}></button>
       </div>
 
     </div>
