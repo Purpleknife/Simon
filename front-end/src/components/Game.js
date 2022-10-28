@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Intro from './Intro';
 
-import { shuffle, complexShuffle, eqArrays } from '../helpers/helpers';
+import { decideOutput, eqArrays } from '../helpers/helpers';
 
 import './Game.scss';
 
@@ -22,14 +22,17 @@ const Game = () => {
     yellow: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
   };
 
-  const [level, setLevel] = useState(1);
-  const [count, setCount] = useState(0);
-  const [status, setStatus] = useState(false);
-  const [playerTurnOver, setPlayerTurnOver] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  //const [level, setLevel] = useState(1);
+  //const [count, setCount] = useState(0);
+  // const [status, setStatus] = useState(false);
+  // const [playerTurnOver, setPlayerTurnOver] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
+  const [playerInput, setPlayerInput] = useState([]);
 
   const [game, setGame] = useState({
     active: false,
+    count: 0,
+    level: 1,
     time: '00:00',
     strict: false,
     gameRandomOutput: ['red', 'green', 'blue', 'yellow'],
@@ -37,7 +40,11 @@ const Game = () => {
   });
 
   const gameIsActive = () => {
-    setIsActive(true);
+    setGame(prev => ({
+      ...prev,
+      active: true,
+      actualGame: decideOutput(game.level, game.gameRandomOutput)
+    }));
   }
 
 
@@ -45,20 +52,18 @@ const Game = () => {
     
     console.log('start runs');
     //setIsActive(true);
-    //console.log('is active', game.active);
+    console.log('is active', game.active);
 
     playSequence();
     
   };
-
-
   useEffect(() => {
-    if (isActive) {
-      //decideOutput();
+    if (game.active) {
       start();
     }
     
-  }, [isActive]);
+  }, [game.active]);
+
 
   const check = () => {
     console.log('check runs');
@@ -66,7 +71,7 @@ const Game = () => {
       if (game.strict) {
         alert('Its strict mode. Try again from scratch');
         clearGame();
-        setLevel(1);
+        //setLevel(1);
         playSequence();
       } else {
         alert('Wrong move. Try again.');
@@ -75,13 +80,18 @@ const Game = () => {
       }
     } 
     if (eqArrays(playerInput, game.actualGame) === true) {
-      if (level < 20) {
+      if (game.level < 20) {
+        console.log('check actualGame', game.actualGame);
         alert('Welcome to the next level.');
         clearGame();
-        setLevel(prev => prev + 1);
+        setGame(prev => ({
+          ...prev,
+          level: prev.level + 1
+        }));
+        //gameIsActive();
         playSequence();
       }
-      if (level === 20) {
+      if (game.level === 20) {
         alert('You won the game after 20 levels!');
         clearGame();
       }
@@ -91,51 +101,22 @@ const Game = () => {
 
   //To reset the game:
   const clearGame = () => {
-    //setStatus(false); // => DOESN'T WORK !!
     console.log('CLEAR GAME RUNS!!');
-    setGame({
-      ...game, 
-      actualGame: []
-    });
+    setGame(prev => ({
+      ...prev,
+      count: 0,
+      actualGame: decideOutput(game.level, game.gameRandomOutput)
+    }));
     setPlayerInput([]);
-    setCount(0);
   };
-
-
-  const decideOutput = () => { //=> Maybe the error comes from here!!! It runs 2 times instead of 1.
-    let arr = shuffle(game.gameRandomOutput);
-
-    if (level >= 1 && level <= 5) {
-      return complexShuffle(arr, 'lvl 1 to 5');
-    }
-    if (level >= 6 && level <= 10) {
-      return complexShuffle(arr, 'lvl 5 to 10');
-    }
-    if (level >= 11 && level <= 15) {
-      return complexShuffle(arr, 'lvl 10 to 15');
-    }
-    if (level >= 16 && level <= 20) {
-      return complexShuffle(arr, 'lvl 15 to 20');
-    }
-  }
 
   
   //Function that plays the sounds and triggers changeStyle() with an interval:
   const playSequence = () => {
     console.log('playSequence runs');
-    console.log('decideOutput', decideOutput());
+    console.log('decideOutput', decideOutput(game.level, game.gameRandomOutput));
+    console.log('level', game.level);
     console.log('playSequence actual game', game.actualGame)
-    //if (isActive) {
-      setGame({
-        ...game, 
-        actualGame: decideOutput()
-      });
-    //}
-
-    // setGame({
-    //   ...game, 
-    //   actualGame: shuffle(game.gameRandomOutput)
-    // });
     
     const doSetTimeout = (item, index) => {
       setTimeout(() => {
@@ -166,11 +147,16 @@ const Game = () => {
   //   }, 1000 * i)
   //  }
 
-  const [playerInput, setPlayerInput] = useState([]);
+
 
   const playerMoves = (button) => {
     changeStyle(button);
-    setCount(prev => prev + 1);
+    setGame(prev => ({
+      ...prev,
+      count: prev.count + 1,
+      //actualGame: []
+    }));
+
     setPlayerInput(prev => [...prev, button]);
     
   };
@@ -178,7 +164,7 @@ const Game = () => {
 
   useEffect(() => {
     console.log('player input state', playerInput);
-    console.log('actual game', game.actualGame);
+    //console.log('actual game', game.actualGame);
 
     if (playerInput.length === game.actualGame.length && game.actualGame.length > 0 && playerInput.length > 0) { //=> Means the player's turn is over.
       check();
@@ -189,53 +175,61 @@ const Game = () => {
 
   const changeStyle = (condition) => {
     if (condition === 'red') {
-      setStyle(
-        {...style, red: 'red-neon'},
+      setStyle(prev => ({
+        ...prev, 
+        red: 'red-neon'})
       );
     sounds.red.play();
 
     setTimeout(() => {
-      setStyle(
-        {...style, red: 'red'}
-      );
+      setStyle(prev => ({
+        ...prev,
+        red: 'red',
+      }));
     }, "300");
     }
 
     if (condition === 'green') {
-      setStyle(
-        {...style, green: 'green-neon'}
+      setStyle(prev => ({
+        ...prev, 
+        green: 'green-neon'})
       );
     sounds.green.play();
 
     setTimeout(() => {
-      setStyle(
-        {...style, green: 'green'}
+      setStyle(prev => ({
+        ...prev, 
+        green: 'green'})
       );
     }, "300");
     }
 
     if (condition === 'blue') {
-      setStyle(
-        {...style, blue: 'blue-neon'}
+      setStyle(prev => ({
+        ...prev, 
+        blue: 'blue-neon'})
       );
     sounds.blue.play();
 
     setTimeout(() => {
-      setStyle(
-        {...style, blue: 'blue'}
+      setStyle(prev => ({
+        ...prev, 
+        blue: 'blue'})
       );
     }, "300");
     }
 
     if (condition === 'yellow') {
-      setStyle(
-        {...style, yellow: 'yellow-neon'}
+      setStyle(prev => ({
+        ...prev, 
+        yellow: 'yellow-neon'})
       );
     sounds.yellow.play();
 
     setTimeout(() => {
-      setStyle(
-        {...style, yellow: 'yellow'}
+      setStyle(prev => ({
+        ...prev, 
+        yellow: 'yellow'})
       );
     }, "300");
     }
@@ -245,24 +239,28 @@ const Game = () => {
 
   const chooseStrict = (condition) => {
     if (condition === 'strict') {
-      setStyle(
-        {...style, strict: 'strict-neon'}
-      );
-      setGame({
-        ...game,
+      setStyle(prev => ({
+        ...prev,
+        strict: 'strict-neon'
+      }));
+      setGame(prev => ({
+        ...prev,
         strict: true
-      });
+      }));
     }
     if (condition === 'strict-neon') {
-      setStyle(
-        {...style, strict: 'strict'}
-      );
-      setGame({
-        ...game,
+      setStyle(prev => ({
+        ...prev,
+        strict: 'strict'
+      }));
+      setGame(prev => ({
+        ...prev,
         strict: false
-      });
+      }));
     }
-  }
+  };
+
+  
   // () => {gameIsActive(); start()}
   return (
     <div className='container'>
@@ -271,7 +269,7 @@ const Game = () => {
       </div>
       
       <div className='game'>
-        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {level} / 20</span>
+        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / 20</span>
         <div id='time'><span>00:00</span></div><br />
         <button className={style.red} onClick={() => playerMoves('red')}></button>
         <div className='middle'>
@@ -279,7 +277,7 @@ const Game = () => {
 
           <div className='mid'>
             <div id='count'>
-              <span>{count < 10 ? `0${count}` : count}</span><br />
+              <span>{game.count < 10 ? `0${game.count}` : game.count}</span><br />
               <label>Count</label>
             </div><br />
 
