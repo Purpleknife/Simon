@@ -6,7 +6,6 @@ eqArrays: function to compare the player's input and the game sequence.
 */
 
 
-
 export const shuffle = (arr) => {
   return arr.sort((a, b) => { 
     return [Math.random() - 0.5];
@@ -41,6 +40,22 @@ export const complexShuffle = (shuffledArr, condition) => {
   }  
 };
 
+export const decideOutput = (level, random) => { //=> Maybe the error comes from here!!! It runs 2 times instead of 1.
+  let arr = shuffle(random);
+
+  if (level >= 0 && level <= 5) {
+    return complexShuffle(arr, 'lvl 1 to 5');
+  }
+  if (level >= 6 && level <= 10) {
+    return complexShuffle(arr, 'lvl 5 to 10');
+  }
+  if (level >= 11 && level <= 15) {
+    return complexShuffle(arr, 'lvl 10 to 15');
+  }
+  if (level >= 16 && level <= 20) {
+    return complexShuffle(arr, 'lvl 15 to 20');
+  }
+}
 
 export const eqArrays = function(arr1, arr2) { //Compare both arrays and if they're a perfect match, return true.
   if (arr1.length !== arr2.length) { //Compare length first, if it doesn't match, exit function and return false.
