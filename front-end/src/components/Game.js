@@ -16,8 +16,6 @@ const Game = () => {
     strict: 'strict'
   });
 
-  const [playerInput, setPlayerInput] = useState([]);
-
   const [game, setGame] = useState({
     active: false,
     status: false,
@@ -26,7 +24,8 @@ const Game = () => {
     time: '00:00',
     strict: false,
     gameRandomOutput: ['red', 'green', 'blue', 'yellow'],
-    actualGame: []
+    actualGame: [],
+    playerInput: [],
   });
 
   const sounds = {
@@ -53,7 +52,6 @@ const Game = () => {
   // When the player clicks on Start:
   const start = () => {    
     console.log('start runs');
-    //setIsActive(true);
     console.log('is active', game.active);
 
     playSequence();
@@ -88,7 +86,6 @@ const Game = () => {
     for (let i = 0; i < game.actualGame.length; i++) {
       doSetTimeout(game.actualGame[i], i);
     }
-
   };
 
 
@@ -99,10 +96,8 @@ const Game = () => {
     setGame(prev => ({
       ...prev,
       count: prev.count + 1,
-      //actualGame: []
+      playerInput: [...prev.playerInput, button]
     }));
-
-    setPlayerInput(prev => [...prev, button]);
   };
 
 
@@ -110,7 +105,7 @@ const Game = () => {
   // To check if the player's input is correct:
   const check = () => {
     console.log('check runs');
-    if (eqArrays(playerInput, game.actualGame) === false) {
+    if (eqArrays(game.playerInput, game.actualGame) === false) {
       if (game.strict) {
         alert('Its strict mode. Try again from scratch');
         clearGame();
@@ -122,7 +117,7 @@ const Game = () => {
         playSequence();
       }
     } 
-    if (eqArrays(playerInput, game.actualGame) === true) {
+    if (eqArrays(game.playerInput, game.actualGame) === true) {
       if (game.level < 20) {
         console.log('check actualGame', game.actualGame);
         alert('Welcome to the next level.');
@@ -146,13 +141,13 @@ const Game = () => {
 
   // check is supposed to run whenever the player finishes playing:
   useEffect(() => {
-    console.log('player input state', playerInput);
+    console.log('player input state', game.playerInput);
     console.log('actual game', game.actualGame);
 
-    if (playerInput.length === game.actualGame.length && game.actualGame.length > 0 && playerInput.length > 0) { //=> Means the player's turn is over.
+    if (game.playerInput.length === game.actualGame.length && game.actualGame.length > 0 && game.playerInput.length > 0) { //=> Means the player's turn is over.
       check();
     };
-  }, [playerInput]);
+  }, [game.playerInput]);
 
 
 
@@ -162,9 +157,9 @@ const Game = () => {
     setGame(prev => ({
       ...prev,
       count: 0,
+      playerInput: []
       //actualGame: []
     }));
-    setPlayerInput([]);
   };
 
 
@@ -250,7 +245,7 @@ const Game = () => {
         strict: true
       }));
     }
-    
+
     if (condition === 'strict-neon') {
       setStyle(prev => ({
         ...prev,
