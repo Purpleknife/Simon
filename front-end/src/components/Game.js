@@ -38,13 +38,13 @@ const Game = () => {
 
   // When the game starts => is active:
   const gameIsActive = () => {
-    let arr = decideOutput(game.level, game.gameRandomOutput);
-
-    setGame(prev => ({
-      ...prev,
-      active: true,
-      actualGame: arr
-    }));
+    setGame(prev => {
+      return {
+        ...prev, 
+        active: true, 
+        actualGame: decideOutput(game.level, game.gameRandomOutput)
+      }
+    });
   };
 
 
@@ -64,6 +64,18 @@ const Game = () => {
     }
   }, [game.active]);
 
+  // useEffect(() => {
+  //   if (game.level > 1 && game.status) {
+  //     setGame(prev => {
+  //       return {
+  //         ...prev,
+  //         actualGame: decideOutput(game.level, game.gameRandomOutput)
+  //       }
+  //     });
+  //   }
+
+  // }, [game.status, clearGame]); //=> The level doesn't change the 1st time...
+
 
 
   // To setTimeout inside the for loop that runs in playSequence:
@@ -82,6 +94,14 @@ const Game = () => {
     console.log('decideOutput', decideOutput(game.level, game.gameRandomOutput));
     console.log('level', game.level);
     console.log('playSequence actual game', game.actualGame)
+
+    if (game.level > 1) {
+      setGame(prev => ({
+        ...prev,
+        status: true,
+        actualGame: decideOutput(game.level, game.gameRandomOutput)
+      }));
+    }
 
     for (let i = 0; i < game.actualGame.length; i++) {
       doSetTimeout(game.actualGame[i], i);
@@ -125,6 +145,7 @@ const Game = () => {
         setGame(prev => ({
           ...prev,
           level: prev.level + 1,
+          status: false
           //actualGame: decideOutput(game.level, game.gameRandomOutput)
         }));
         
@@ -147,19 +168,21 @@ const Game = () => {
     if (game.playerInput.length === game.actualGame.length && game.actualGame.length > 0 && game.playerInput.length > 0) { //=> Means the player's turn is over.
       check();
     };
-  }, [game.playerInput]);
+  }, [game.playerInput, game.level, game.actualGame]);
 
 
 
   // To reset the game:
   const clearGame = () => {
     console.log('CLEAR GAME RUNS!!');
-    setGame(prev => ({
-      ...prev,
-      count: 0,
-      playerInput: []
-      //actualGame: []
-    }));
+    setGame(prev => {
+      return {
+        ...prev,
+        count: 0,
+        playerInput: [],
+        actualGame: []
+      }
+    });
   };
 
 
@@ -257,7 +280,7 @@ const Game = () => {
       }));
     }
   };
-
+  //() => {gameIsActive(); start()}
 
   return (
     <div className='container'>
