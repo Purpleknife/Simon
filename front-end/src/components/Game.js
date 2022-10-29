@@ -6,6 +6,7 @@ import { decideOutput, eqArrays } from '../helpers/helpers';
 
 import './Game.scss';
 
+
 const Game = () => {
   const [style, setStyle] = useState({
     red: 'red',
@@ -15,22 +16,11 @@ const Game = () => {
     strict: 'strict'
   });
 
-  const sounds = {
-    red: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
-    green: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
-    blue: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
-    yellow: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
-  };
-
-  //const [level, setLevel] = useState(1);
-  //const [count, setCount] = useState(0);
-  // const [status, setStatus] = useState(false);
-  // const [playerTurnOver, setPlayerTurnOver] = useState(false);
-  // const [isActive, setIsActive] = useState(false);
   const [playerInput, setPlayerInput] = useState([]);
 
   const [game, setGame] = useState({
     active: false,
+    status: false,
     count: 0,
     level: 1,
     time: '00:00',
@@ -39,17 +29,29 @@ const Game = () => {
     actualGame: []
   });
 
+  const sounds = {
+    red: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
+    green: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
+    blue: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
+    yellow: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
+  };
+
+
+  // When the game starts => is active:
   const gameIsActive = () => {
+    let arr = decideOutput(game.level, game.gameRandomOutput);
+
     setGame(prev => ({
       ...prev,
       active: true,
-      actualGame: decideOutput(game.level, game.gameRandomOutput)
+      actualGame: arr
     }));
-  }
+  };
 
 
-  const start = () => {
-    
+
+  // When the player clicks on Start:
+  const start = () => {    
     console.log('start runs');
     //setIsActive(true);
     console.log('is active', game.active);
@@ -57,14 +59,55 @@ const Game = () => {
     playSequence();
     
   };
+
   useEffect(() => {
     if (game.active) {
       start();
     }
-    
   }, [game.active]);
 
 
+
+  // To setTimeout inside the for loop that runs in playSequence:
+  const doSetTimeout = (item, index) => {
+    setTimeout(() => {
+      console.log(item);
+      changeStyle(item);
+    }, 600 * index);
+  };
+
+  
+  
+  // Function that plays the sounds and triggers changeStyle() with an interval:
+  const playSequence = () => {
+    console.log('playSequence runs');
+    console.log('decideOutput', decideOutput(game.level, game.gameRandomOutput));
+    console.log('level', game.level);
+    console.log('playSequence actual game', game.actualGame)
+
+    for (let i = 0; i < game.actualGame.length; i++) {
+      doSetTimeout(game.actualGame[i], i);
+    }
+
+  };
+
+
+
+  // When the player plays => clicks on the buttons:
+  const playerMoves = (button) => {
+    changeStyle(button);
+    setGame(prev => ({
+      ...prev,
+      count: prev.count + 1,
+      //actualGame: []
+    }));
+
+    setPlayerInput(prev => [...prev, button]);
+  };
+
+
+
+  // To check if the player's input is correct:
   const check = () => {
     console.log('check runs');
     if (eqArrays(playerInput, game.actualGame) === false) {
@@ -86,9 +129,10 @@ const Game = () => {
         clearGame();
         setGame(prev => ({
           ...prev,
-          level: prev.level + 1
+          level: prev.level + 1,
+          //actualGame: decideOutput(game.level, game.gameRandomOutput)
         }));
-        //gameIsActive();
+        
         playSequence();
       }
       if (game.level === 20) {
@@ -99,94 +143,48 @@ const Game = () => {
   };
 
 
-  //To reset the game:
+
+  // check is supposed to run whenever the player finishes playing:
+  useEffect(() => {
+    console.log('player input state', playerInput);
+    console.log('actual game', game.actualGame);
+
+    if (playerInput.length === game.actualGame.length && game.actualGame.length > 0 && playerInput.length > 0) { //=> Means the player's turn is over.
+      check();
+    };
+  }, [playerInput]);
+
+
+
+  // To reset the game:
   const clearGame = () => {
     console.log('CLEAR GAME RUNS!!');
     setGame(prev => ({
       ...prev,
       count: 0,
-      actualGame: decideOutput(game.level, game.gameRandomOutput)
+      //actualGame: []
     }));
     setPlayerInput([]);
   };
 
-  
-  //Function that plays the sounds and triggers changeStyle() with an interval:
-  const playSequence = () => {
-    console.log('playSequence runs');
-    console.log('decideOutput', decideOutput(game.level, game.gameRandomOutput));
-    console.log('level', game.level);
-    console.log('playSequence actual game', game.actualGame)
-    
-    const doSetTimeout = (item, index) => {
-      setTimeout(() => {
-        console.log(item);
-        changeStyle(item);
-      }, 600 * index);
-    }
-        
-    let newArr = game.actualGame;
-    for (let i = 0; i < newArr.length; i++) {
-      doSetTimeout(newArr[i], i);
-      // setTimeout(() => {
-      //   console.log(newArr[i]);
-      //   changeStyle(newArr[i]);
-      // }, 600 * i);
-    }
-
-  };
-
-  // const doSetTimeout = (arr) => {
-  //   let i = 0;
-  //   const interval = setInterval(() => {
-  //     changeStyle(arr[i]);
-  //     i++;
-  //     if (i >= arr.length) {
-  //       clearInterval(interval);
-  //     }
-  //   }, 1000 * i)
-  //  }
 
 
-
-  const playerMoves = (button) => {
-    changeStyle(button);
-    setGame(prev => ({
-      ...prev,
-      count: prev.count + 1,
-      //actualGame: []
-    }));
-
-    setPlayerInput(prev => [...prev, button]);
-    
-  };
-
-
-  useEffect(() => {
-    console.log('player input state', playerInput);
-    //console.log('actual game', game.actualGame);
-
-    if (playerInput.length === game.actualGame.length && game.actualGame.length > 0 && playerInput.length > 0) { //=> Means the player's turn is over.
-      check();
-    };
-  }, [playerInput, game.actualGame]);
-  
-
-
+  // To play the sounds + change the buttons's CSS whenever they're clicked:
   const changeStyle = (condition) => {
     if (condition === 'red') {
       setStyle(prev => ({
         ...prev, 
         red: 'red-neon'})
       );
-    sounds.red.play();
 
-    setTimeout(() => {
-      setStyle(prev => ({
-        ...prev,
-        red: 'red',
-      }));
-    }, "300");
+      sounds.red.play();
+
+      setTimeout(() => {
+        setStyle(prev => ({
+          ...prev,
+          red: 'red',
+        }));
+      }, "300");
     }
 
     if (condition === 'green') {
@@ -194,14 +192,15 @@ const Game = () => {
         ...prev, 
         green: 'green-neon'})
       );
-    sounds.green.play();
 
-    setTimeout(() => {
-      setStyle(prev => ({
-        ...prev, 
-        green: 'green'})
-      );
-    }, "300");
+      sounds.green.play();
+
+      setTimeout(() => {
+        setStyle(prev => ({
+          ...prev, 
+          green: 'green'})
+        );
+      }, "300");
     }
 
     if (condition === 'blue') {
@@ -209,14 +208,15 @@ const Game = () => {
         ...prev, 
         blue: 'blue-neon'})
       );
-    sounds.blue.play();
 
-    setTimeout(() => {
-      setStyle(prev => ({
-        ...prev, 
-        blue: 'blue'})
-      );
-    }, "300");
+      sounds.blue.play();
+
+      setTimeout(() => {
+        setStyle(prev => ({
+          ...prev, 
+          blue: 'blue'})
+        );
+      }, "300");
     }
 
     if (condition === 'yellow') {
@@ -224,19 +224,21 @@ const Game = () => {
         ...prev, 
         yellow: 'yellow-neon'})
       );
-    sounds.yellow.play();
 
-    setTimeout(() => {
-      setStyle(prev => ({
-        ...prev, 
-        yellow: 'yellow'})
-      );
-    }, "300");
+      sounds.yellow.play();
+
+      setTimeout(() => {
+        setStyle(prev => ({
+          ...prev, 
+          yellow: 'yellow'})
+        );
+      }, "300");
     }
-
-    
   };
 
+
+
+  // To set Strict Mode:
   const chooseStrict = (condition) => {
     if (condition === 'strict') {
       setStyle(prev => ({
@@ -248,6 +250,7 @@ const Game = () => {
         strict: true
       }));
     }
+    
     if (condition === 'strict-neon') {
       setStyle(prev => ({
         ...prev,
@@ -260,8 +263,7 @@ const Game = () => {
     }
   };
 
-  
-  // () => {gameIsActive(); start()}
+
   return (
     <div className='container'>
       <div className='intro_game'>
