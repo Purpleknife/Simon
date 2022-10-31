@@ -20,12 +20,13 @@ const Game = () => {
   const [game, setGame] = useState({
     active: false,
     level: 0,
-    time: '00:00',
     strict: false,
     gameRandomOutput: ['red', 'green', 'blue', 'yellow'],
     actualGame: ['red', 'green', 'blue', 'yellow'],
     playerInput: [],
   });
+
+  const [timer, setTimer] = useState(false);
 
   const sounds = {
     red: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
@@ -52,6 +53,7 @@ const Game = () => {
   const start = () => {    
     console.log('start runs');
     console.log('is active', game.active);
+    
 
     playSequence();
     
@@ -59,6 +61,7 @@ const Game = () => {
 
   useEffect(() => {
     if (game.active) {
+      setTimer(true);
       start();
     }
   }, [game.active]);
@@ -66,14 +69,12 @@ const Game = () => {
 
   // When the player plays => clicks on the buttons:
   const playerMoves = (button) => {
-      setGame(prev => ({
-        ...prev,
-        playerInput: [...prev.playerInput, button]
-      }));
-      changeStyle(button);
+    setGame(prev => ({
+      ...prev,
+      playerInput: [...prev.playerInput, button]
+    }));
+    changeStyle(button);
   };
-
-
 
   // To check if the player's input is correct:
   const check = () => {
@@ -112,7 +113,9 @@ const Game = () => {
     console.log('playSequence runs');
     console.log('level', game.level);
     console.log('playSequence actual game', game.actualGame)
+    console.log('timer', timer);
 
+    //setTimer(false);
     let i = 0;
     const interval = setInterval(() => {
       changeStyle(game.actualGame[i]);
@@ -126,9 +129,10 @@ const Game = () => {
 
 
   useEffect(() => {
-    if (game.active) {
-      playSequence();
+    if (game.active) {      
+      playSequence();      
     }
+    //setTimer(true);
     
   }, [game.actualGame]);
 
@@ -294,7 +298,7 @@ const Game = () => {
       
       <div className='game'>
         <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / 10</span>
-        <Timer />
+        <Timer timer={timer} resetGame={resetGame} />
         <br />
         <button className={style.red} onClick={() => playerMoves('red')}></button>
         <div className='middle'>

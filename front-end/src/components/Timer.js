@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Timer = () => {
-  const [timer, setTimer] = useState({
-    minutes: 0,
-    seconds: 0
-  });
+const Timer = (props) => {
+  //Set timer for 5 minutes:
+
+  const [countdown, setCountdown] = useState(300);
+  const minutes = Math.floor(countdown / 60);
+  const seconds = Math.floor(countdown % 60);
+
+  useEffect(() => {
+    if (props.timer === true) {
+      const interval = setInterval(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
   
+      if (countdown === 0) {
+        clearInterval(interval);
+        props.resetGame();
+        alert('Game Over!');
+      }
+  
+      return () => {
+        clearInterval(interval);
+      }
+    }
+    
+  })
+    
+
+  // if (!props.timer) {
+  //   clearInterval(interval);
+  // }
+
   return (
     <div id='time'>
-      00:00
+      {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
     </div>
   );
 }
