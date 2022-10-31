@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Intro from './Intro';
 
-import { decideOutput, eqArrays } from '../helpers/helpers';
+import { eqArrays } from '../helpers/helpers';
 
 import './Game.scss';
 
@@ -20,11 +20,11 @@ const Game = () => {
     active: false,
     status: false,
     count: 0,
-    level: 1,
+    level: 0,
     time: '00:00',
     strict: false,
     gameRandomOutput: ['red', 'green', 'blue', 'yellow'],
-    actualGame: [],
+    actualGame: ['red', 'green', 'blue', 'yellow'],
     playerInput: [],
   });
 
@@ -41,8 +41,8 @@ const Game = () => {
     setGame(prev => {
       return {
         ...prev, 
-        active: true, 
-        actualGame: decideOutput(game.level, game.gameRandomOutput)
+        active: true,
+        level: game.level + 1
       }
     });
   };
@@ -64,60 +64,16 @@ const Game = () => {
     }
   }, [game.active]);
 
-  // useEffect(() => {
-  //   if (game.level > 1 && game.status) {
-  //     setGame(prev => {
-  //       return {
-  //         ...prev,
-  //         actualGame: decideOutput(game.level, game.gameRandomOutput)
-  //       }
-  //     });
-  //   }
-
-  // }, [game.status, clearGame]); //=> The level doesn't change the 1st time...
-
-
-
-  // To setTimeout inside the for loop that runs in playSequence:
-  const doSetTimeout = (item, index) => {
-    setTimeout(() => {
-      console.log(item);
-      changeStyle(item);
-    }, 600 * index);
-  };
-
-  
-  
-  // Function that plays the sounds and triggers changeStyle() with an interval:
-  const playSequence = () => {
-    console.log('playSequence runs');
-    console.log('decideOutput', decideOutput(game.level, game.gameRandomOutput));
-    console.log('level', game.level);
-    console.log('playSequence actual game', game.actualGame)
-
-    if (game.level > 1) {
-      setGame(prev => ({
-        ...prev,
-        status: true,
-        actualGame: decideOutput(game.level, game.gameRandomOutput)
-      }));
-    }
-
-    for (let i = 0; i < game.actualGame.length; i++) {
-      doSetTimeout(game.actualGame[i], i);
-    }
-  };
-
-
 
   // When the player plays => clicks on the buttons:
   const playerMoves = (button) => {
-    changeStyle(button);
-    setGame(prev => ({
-      ...prev,
-      count: prev.count + 1,
-      playerInput: [...prev.playerInput, button]
-    }));
+      setGame(prev => ({
+        ...prev,
+        //active: false,
+        count: prev.count + 1,
+        playerInput: [...prev.playerInput, button]
+      }));
+      changeStyle(button);
   };
 
 
@@ -144,12 +100,10 @@ const Game = () => {
         clearGame();
         setGame(prev => ({
           ...prev,
-          level: prev.level + 1,
-          status: false
-          //actualGame: decideOutput(game.level, game.gameRandomOutput)
+          level: game.level + 1,
+          actualGame: [...game.actualGame, game.actualGame[(Math.floor(Math.random()*4))]]
         }));
-        
-        playSequence();
+        //playSequence();
       }
       if (game.level === 20) {
         alert('You won the game after 20 levels!');
@@ -159,16 +113,42 @@ const Game = () => {
   };
 
 
+  // Function that plays the sounds and triggers changeStyle() with an interval:
+  const playSequence = () => {
+    console.log('playSequence runs');
+    console.log('level', game.level);
+    console.log('playSequence actual game', game.actualGame)
+
+    let i = 0;
+    const interval = setInterval(() => {
+      changeStyle(game.actualGame[i]);
+      console.log(game.actualGame[i]);
+      i++;
+      if (i >= game.actualGame.length) {
+        clearInterval(interval);
+      }
+    }, 600);
+  };
+
+
+  useEffect(() => {
+    if (game.active) {
+      playSequence();
+    }
+    
+  }, [game.actualGame]);
+
+
 
   // check is supposed to run whenever the player finishes playing:
   useEffect(() => {
     console.log('player input state', game.playerInput);
-    console.log('actual game', game.actualGame);
+    console.log('actual game', game.actualGame);    
 
     if (game.playerInput.length === game.actualGame.length && game.actualGame.length > 0 && game.playerInput.length > 0) { //=> Means the player's turn is over.
       check();
     };
-  }, [game.playerInput, game.level, game.actualGame]);
+  }, [game.actualGame, game.playerInput]);
 
 
 
@@ -180,7 +160,7 @@ const Game = () => {
         ...prev,
         count: 0,
         playerInput: [],
-        actualGame: []
+        //actualGame: [...prev.actualGame]
       }
     });
   };
