@@ -67,6 +67,7 @@ const Game = () => {
   }, [game.active]);
 
 
+  
   // When the player plays => clicks on the buttons:
   const playerMoves = (button) => {
     setGame(prev => ({
@@ -76,12 +77,14 @@ const Game = () => {
     changeStyle(button);
   };
 
+
+
   // To check if the player's input is correct:
   const check = () => {
     console.log('check runs');
     if (eqArrays(game.playerInput, game.actualGame) === false) {
       if (game.strict) {
-        alert('Its strict mode. Try again from scratch');
+        alert('It\'s strict mode. Try again from scratch');
         resetGame();
       } else {
         alert('Wrong move. Try again.');
@@ -115,7 +118,6 @@ const Game = () => {
     console.log('playSequence actual game', game.actualGame)
     console.log('timer', timer);
 
-    //setTimer(false);
     let i = 0;
     const interval = setInterval(() => {
       changeStyle(game.actualGame[i]);
@@ -132,7 +134,6 @@ const Game = () => {
     if (game.active) {      
       playSequence();      
     }
-    //setTimer(true);
     
   }, [game.actualGame]);
 
