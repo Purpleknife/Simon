@@ -70,7 +70,7 @@ const Game = () => {
       setGame(prev => ({
         ...prev,
         //active: false,
-        count: prev.count + 1,
+        //count: prev.count + 1,
         playerInput: [...prev.playerInput, button]
       }));
       changeStyle(button);
@@ -305,7 +305,7 @@ const Game = () => {
 
           <div className='mid'>
             <div id='count'>
-              <span>{game.count < 10 ? `0${game.count}` : game.count}</span><br />
+              {!game.active ? <span>00</span> : <span>{game.actualGame.length < 10 ? `0${game.actualGame.length}` : game.actualGame.length}</span>}<br />
               <label>Count</label>
             </div><br />
 
