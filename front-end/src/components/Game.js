@@ -288,7 +288,7 @@ const Game = () => {
       }));
     }
   };
-  //() => {gameIsActive(); start()}
+
 
   return (
     <div className='container'>
@@ -309,7 +309,7 @@ const Game = () => {
               <label>Count</label>
             </div><br />
 
-              <button onClick={() => {gameIsActive(); start()}} className="start">Start</button>&nbsp;&nbsp;
+              {!game.active ? <button onClick={() => {gameIsActive(); start()}} className="start">Start</button> : <button onClick={resetGame} className="start">Reset</button>}&nbsp;&nbsp;
               <button className={style.strict} onClick={() => { 
                 if (style.strict === 'strict') {
                   return chooseStrict('strict');
