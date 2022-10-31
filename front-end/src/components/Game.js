@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Intro from './Intro';
+import Timer from './Timer';
 
 import { eqArrays } from '../helpers/helpers';
 
@@ -293,7 +294,8 @@ const Game = () => {
       
       <div className='game'>
         <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / 10</span>
-        <div id='time'><span>00:00</span></div><br />
+        <Timer />
+        <br />
         <button className={style.red} onClick={() => playerMoves('red')}></button>
         <div className='middle'>
           <button className={style.green} onClick={() => playerMoves('green')}></button>
