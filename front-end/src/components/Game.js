@@ -18,8 +18,6 @@ const Game = () => {
 
   const [game, setGame] = useState({
     active: false,
-    status: false,
-    count: 0,
     level: 0,
     time: '00:00',
     strict: false,
@@ -69,8 +67,6 @@ const Game = () => {
   const playerMoves = (button) => {
       setGame(prev => ({
         ...prev,
-        //active: false,
-        //count: prev.count + 1,
         playerInput: [...prev.playerInput, button]
       }));
       changeStyle(button);
@@ -170,8 +166,8 @@ const Game = () => {
     setGame(prev => {
       return {
         ...prev,
-        count: 0,
-        level: 1,
+        active: false,
+        level: 0,
         playerInput: [],
         actualGame: ['red', 'green', 'blue', 'yellow'],
       }
@@ -186,7 +182,6 @@ const Game = () => {
     setGame(prev => {
       return {
         ...prev,
-        count: 0,
         playerInput: [],
         actualGame: [...prev.actualGame],
       }
