@@ -84,17 +84,14 @@ const Game = () => {
     if (eqArrays(game.playerInput, game.actualGame) === false) {
       if (game.strict) {
         alert('Its strict mode. Try again from scratch');
-        clearGame();
-        //setLevel(1);
-        playSequence();
+        resetGame();
       } else {
         alert('Wrong move. Try again.');
-        clearGame();
-        playSequence();
+        goBack();
       }
     } 
     if (eqArrays(game.playerInput, game.actualGame) === true) {
-      if (game.level < 20) {
+      if (game.level < 10) {
         console.log('check actualGame', game.actualGame);
         alert('Welcome to the next level.');
         clearGame();
@@ -105,9 +102,9 @@ const Game = () => {
         }));
         //playSequence();
       }
-      if (game.level === 20) {
+      if (game.level === 10) {
         alert('You won the game after 20 levels!');
-        clearGame();
+        //clearGame();
       }
     }
   };
@@ -152,7 +149,7 @@ const Game = () => {
 
 
 
-  // To reset the game:
+  // To proceed to the next level:
   const clearGame = () => {
     console.log('CLEAR GAME RUNS!!');
     setGame(prev => {
@@ -161,6 +158,37 @@ const Game = () => {
         count: 0,
         playerInput: [],
         //actualGame: [...prev.actualGame]
+      }
+    });
+  };
+
+
+
+  // To reset the game:
+  const resetGame = () => {
+    console.log('reset game runs!!!')
+    setGame(prev => {
+      return {
+        ...prev,
+        count: 0,
+        level: 1,
+        playerInput: [],
+        actualGame: ['red', 'green', 'blue', 'yellow'],
+      }
+    });
+  };
+
+
+
+  // To go back to last sequence:
+  const goBack = () => {
+    console.log('goBack runs!!!')
+    setGame(prev => {
+      return {
+        ...prev,
+        count: 0,
+        playerInput: [],
+        actualGame: [...prev.actualGame],
       }
     });
   };
@@ -269,7 +297,7 @@ const Game = () => {
       </div>
       
       <div className='game'>
-        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / 20</span>
+        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / 10</span>
         <div id='time'><span>00:00</span></div><br />
         <button className={style.red} onClick={() => playerMoves('red')}></button>
         <div className='middle'>
