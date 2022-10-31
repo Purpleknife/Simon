@@ -11,14 +11,15 @@ Simon is a game of short-term memory skill invented by Ralph H. Baer and Howard 
 6. Learn how to manage state better.
 
 ## Features
-- Game has 4 colored buttons (Green, Red, Yellow, Blue) they can press.
-- Each button will have their own distinct sound.
-- When a button is pressed, the button will light up indicating it is active.
-- After each successful round, one additional pattern will be added to the sequence.
-- If the users enters an incorrect pattern, game will end.
-- Pattern should be displayed after a specific interval.
-- Display a correct counter.
-- Add Login/ Register so the user can keep track of their score.
-- Add 2 modes to the Game to make it more complex:
-  - Strict mode: restarts the game whenever you select the wrong field in a pattern.
-  - Normal mode: repeats the pattern subsequent of the wrong button being pressed.
+- [X] Game has 4 colored buttons (Green, Red, Yellow, Blue) they can press.
+- [X] Each button will have their own distinct sound.
+- [X] The player has 5 minutes to complete all 10 levels or they lose.
+- [X] When a button is pressed, the button will light up indicating it is active.
+- [X] After each successful round, the sequence gets more complex.
+- [X] If the users enters an incorrect pattern, game will end.
+- [X] Pattern should be displayed after a specific interval.
+- [X] Display a correct counter.
+- [ ] Add Login/ Register so the user can keep track of their score.
+- [X] Add 2 modes to the Game to make it more complex:
+  - [X] Strict mode: restarts the game whenever you select the wrong field in a pattern.
+  - [X] Normal mode: repeats the pattern subsequent of the wrong button being pressed.
