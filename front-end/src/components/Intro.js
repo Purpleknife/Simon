@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import Login from './Login';
+import Register from './Register';
+
 import './Intro.scss';
 
 import Button from 'react-bootstrap/Button';
@@ -7,6 +10,14 @@ import Modal from 'react-bootstrap/Modal';
 
 const Intro = () => {
   const [show, setShow] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+
+  const handleRegisterClose = () => setShowRegister(false);
+  const handleRegisterShow = () => setShowRegister(true);
+
+  const handleLoginClose = () => setShowLogin(false);
+  const handleLoginShow = () => setShowLogin(true);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,8 +29,17 @@ const Intro = () => {
         <Button className='instructions' onClick={handleShow}>
           Instructions
         </Button>&nbsp;
-        <button className='login'>Login</button>&nbsp;
-        <button className='register'>Register</button>
+        
+        <Button className='login' onClick={handleLoginShow}>
+          Login
+        </Button>
+        <Login handleClose={handleLoginClose} show={showLogin}/>&nbsp;
+
+        <Button className='register' onClick={handleRegisterShow}>
+          Register
+        </Button>
+        <Register handleClose={handleRegisterClose} show={showRegister}/>
+
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
