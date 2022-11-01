@@ -52,21 +52,12 @@ const Game = () => {
 
 
   // When the player clicks on Start:
-  const start = () => {    
-    console.log('start runs');
-    console.log('is active', game.active);
-    
-
-    playSequence();
-    
-  };
-
   useEffect(() => {
     if (game.active) {
       setTimer(true);
-      start();
+      playSequence();
     }
-  }, [game.active]);
+  }, [game.actualGame]);
 
 
   
@@ -132,14 +123,6 @@ const Game = () => {
   };
 
 
-  useEffect(() => {
-    if (game.active) {      
-      playSequence();      
-    }
-    
-  }, [game.actualGame]);
-
-
 
   // check is supposed to run whenever the player finishes playing:
   useEffect(() => {
@@ -160,8 +143,7 @@ const Game = () => {
       return {
         ...prev,
         count: 0,
-        playerInput: [],
-        //actualGame: [...prev.actualGame]
+        playerInput: []
       }
     });
   };
@@ -313,7 +295,7 @@ const Game = () => {
               <label>Count</label>
             </div><br />
 
-              {!game.active ? <button onClick={() => {gameIsActive(); start()}} className="start">Start</button> : <button onClick={resetGame} className="start">Reset</button>}&nbsp;&nbsp;
+              {!game.active ? <button onClick={() => {gameIsActive(); playSequence()}} className="start">Start</button> : <button onClick={resetGame} className="start">Reset</button>}&nbsp;&nbsp;
               <button className={style.strict} onClick={() => { 
                 if (style.strict === 'strict') {
                   return chooseStrict('strict');
