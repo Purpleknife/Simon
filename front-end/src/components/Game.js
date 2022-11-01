@@ -97,7 +97,7 @@ const Game = () => {
     if (eqArrays(game.playerInput, game.actualGame) === true) {
       if (game.level < maxLevel) {
         console.log('check actualGame', game.actualGame);
-        setShowAlert('Welcome to the next level.');
+        setShowAlert(`Welcome to the level ${game.level + 1}.`);
         setShow(true);
         clearGame();
         setGame(prev => ({

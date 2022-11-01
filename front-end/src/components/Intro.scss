@@ -19,7 +19,7 @@
 }
 
 .info {
-  margin-right: -97em;
+  margin-right: -110em;
   margin-top: -4.5em;
 
 
@@ -33,22 +33,6 @@
     text-align: center !important;
   }
 
-  .login_register {
-    background-color: grey;
-    width: 7em;
-    height: 2.4em;
-    border-radius: 8px;
-    font-family: $third-font;
-    border: none !important;
-    font-weight: bold;
-  }
-
-}
-
-.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-  background-color: grey!important;
-  border-radius: 8px !important;
-  border: none !important;
 }
 
 #fun {

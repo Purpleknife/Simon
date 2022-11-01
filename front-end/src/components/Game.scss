@@ -152,12 +152,13 @@
 }
 
 .close_btn {
-  margin-left: 92%;
+  margin-left: 91%;
   margin-top: 0.5em;
   margin-right: 0.5em;
   text-align: center;
   background-color: $red !important;
   font-weight: bold;
+  border: none !important;
 }
 
 .alert {
