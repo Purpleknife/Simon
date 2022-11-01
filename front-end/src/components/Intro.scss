@@ -19,32 +19,36 @@
 }
 
 .info {
-  margin-right: -100em;
-  margin-top: -4em;
+  margin-right: -97em;
+  margin-top: -4.5em;
+
 
   .instructions {
     background-color: $red !important;
     border-color: $red !important;
     font-family: $third-font;
-
+    height: 2.4em;
+    width: 7em;
+    font-weight: bold;
+    text-align: center !important;
   }
 
-  .login {
+  .login_register {
     background-color: grey;
-    width: 6em;
-    height: 2.6em;
+    width: 7em;
+    height: 2.4em;
     border-radius: 8px;
     font-family: $third-font;
+    border: none !important;
+    font-weight: bold;
   }
 
-  .register {
-    background-color: grey;
-    width: 6em;
-    height: 2.6em;
-    border-radius: 8px;
-    font-family: $third-font;
-  }
+}
 
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: grey!important;
+  border-radius: 8px !important;
+  border: none !important;
 }
 
 #fun {

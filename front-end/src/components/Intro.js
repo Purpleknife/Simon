@@ -30,12 +30,12 @@ const Intro = () => {
           Instructions
         </Button>&nbsp;
         
-        <Button className='login' onClick={handleLoginShow}>
+        <Button className='login_register' onClick={handleLoginShow}>
           Login
         </Button>
         <Login handleClose={handleLoginClose} show={showLogin}/>&nbsp;
 
-        <Button className='register' onClick={handleRegisterShow}>
+        <Button className='login_register' onClick={handleRegisterShow}>
           Register
         </Button>
         <Register handleClose={handleRegisterClose} show={showRegister}/>
