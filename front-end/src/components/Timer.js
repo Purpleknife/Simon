@@ -8,7 +8,7 @@ const Timer = (props) => {
   const seconds = Math.floor(countdown % 60);
 
   useEffect(() => {
-    if (props.timer === true) {
+    if (props.timer === true && props.resetTimer === false) {
       const interval = setInterval(() => {
         setCountdown(countdown - 1);
       }, 1000);
@@ -23,6 +23,10 @@ const Timer = (props) => {
       return () => {
         clearInterval(interval);
       }
+    }
+
+    if (props.resetTimer === true) {
+      setCountdown(240);
     }
     
   });

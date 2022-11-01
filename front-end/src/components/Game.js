@@ -7,7 +7,6 @@ import { eqArrays } from '../helpers/helpers';
 
 import './Game.scss';
 
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 
@@ -30,6 +29,7 @@ const Game = () => {
   });
 
   const [timer, setTimer] = useState(false);
+  const [resetTimer, setResetTimer] = useState(false);
 
   const [showAlert, setShowAlert] = useState('');
   const [show, setShow] = useState(false);
@@ -48,6 +48,7 @@ const Game = () => {
 
   // When the game starts => is active:
   const gameIsActive = () => {
+    setResetTimer(false);
     setTimer(true);
     setGame(prev => {
       return {
@@ -164,6 +165,7 @@ const Game = () => {
   // To reset the game:
   const resetGame = () => {
     console.log('reset game runs!!!')
+    setResetTimer(true);
     setGame(prev => {
       return {
         ...prev,
@@ -304,7 +306,7 @@ const Game = () => {
       
       <div className='game'>
         <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / {maxLevel}</span>
-        <Timer timer={timer} resetGame={resetGame} setShow={setShow} setShowAlert={setShowAlert}/>
+        <Timer resetTimer={resetTimer} timer={timer} resetGame={resetGame} setShow={setShow} setShowAlert={setShowAlert}/>
         <br />
         {game.active ? <button className={style.red} onClick={() => playerMoves('red')}></button> : <button className={style.red} onClick={() => playerMoves('red')} disabled></button>}
         <div className='middle'>
