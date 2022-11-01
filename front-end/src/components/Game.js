@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import Intro from './Intro';
 import Timer from './Timer';
+import Login from './Login';
+import Register from './Register';
 
 import { eqArrays } from '../helpers/helpers';
 
