@@ -48,6 +48,7 @@ const Game = () => {
 
   // When the game starts => is active:
   const gameIsActive = () => {
+    setTimer(true);
     setGame(prev => {
       return {
         ...prev, 
@@ -62,7 +63,6 @@ const Game = () => {
   // When the player clicks on Start:
   useEffect(() => {
     if (game.active && show === false) {
-      setTimer(true);
       playSequence();
     }
   }, [game.actualGame, show]);
