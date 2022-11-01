@@ -7,6 +7,9 @@ import { eqArrays } from '../helpers/helpers';
 
 import './Game.scss';
 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 
 const Game = () => {
   const [style, setStyle] = useState({
@@ -27,6 +30,11 @@ const Game = () => {
   });
 
   const [timer, setTimer] = useState(false);
+
+  const [showAlert, setShowAlert] = useState('');
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
 
   const sounds = {
     red: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
@@ -53,11 +61,11 @@ const Game = () => {
 
   // When the player clicks on Start:
   useEffect(() => {
-    if (game.active) {
+    if (game.active && show === false) {
       setTimer(true);
       playSequence();
     }
-  }, [game.actualGame]);
+  }, [game.actualGame, show]);
 
 
   
@@ -77,27 +85,30 @@ const Game = () => {
     console.log('check runs');
     if (eqArrays(game.playerInput, game.actualGame) === false) {
       if (game.strict) {
-        alert('It\'s strict mode. Try again from scratch');
+        setShowAlert('It\'s strict mode. Try again from scratch');
+        setShow(true);
         resetGame();
       } else {
-        alert('Wrong move. Try again.');
+        setShowAlert('Wrong move. Try again.');
+        setShow(true);
         goBack();
       }
     } 
     if (eqArrays(game.playerInput, game.actualGame) === true) {
       if (game.level < maxLevel) {
         console.log('check actualGame', game.actualGame);
-        alert('Welcome to the next level.');
+        setShowAlert('Welcome to the next level.');
+        setShow(true);
         clearGame();
         setGame(prev => ({
           ...prev,
           level: game.level + 1,
           actualGame: [...game.actualGame, game.gameRandomOutput[(Math.floor(Math.random()*4))]]
         }));
-        //playSequence();
       }
       if (game.level === maxLevel) {
-        alert('You won the game after 20 levels!');
+        setShowAlert(`You won the game after ${maxLevel} levels!`);
+        setShow(true);
         resetGame();
       }
     }
@@ -280,10 +291,17 @@ const Game = () => {
       <div className='intro_game'>
         <Intro />
       </div>
+
+      <Modal show={show} onHide={handleClose} animation={false}>        
+          <Button className='close_btn' onClick={handleClose}>
+            X  
+          </Button>
+        <Modal.Body className='alert'>{showAlert}</Modal.Body>
+      </Modal>
       
       <div className='game'>
         <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / {maxLevel}</span>
-        <Timer timer={timer} resetGame={resetGame} />
+        <Timer timer={timer} resetGame={resetGame} setShow={setShow} setShowAlert={setShowAlert}/>
         <br />
         <button className={style.red} onClick={() => playerMoves('red')}></button>
         <div className='middle'>

@@ -151,6 +151,20 @@
   }
 }
 
+.close_btn {
+  margin-left: 92%;
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+  text-align: center;
+  background-color: $red !important;
+  font-weight: bold;
+}
+
+.alert {
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .strict-neon {
   display: inline-block;
   width: 4em;

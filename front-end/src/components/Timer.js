@@ -16,7 +16,8 @@ const Timer = (props) => {
       if (countdown === 0) {
         clearInterval(interval);
         props.resetGame();
-        alert('Game Over!');
+        props.setShowAlert('Game Over! The 4 minutes are up.');
+        props.setShow(true);
       }
   
       return () => {
@@ -24,12 +25,7 @@ const Timer = (props) => {
       }
     }
     
-  })
-    
-
-  // if (!props.timer) {
-  //   clearInterval(interval);
-  // }
+  });
 
   return (
     <div id='time'>
