@@ -22,7 +22,7 @@ const Game = () => {
     level: 0,
     strict: false,
     gameRandomOutput: ['red', 'green', 'blue', 'yellow'],
-    actualGame: ['red', 'green', 'blue', 'yellow'],
+    actualGame: ['red', 'green'],
     playerInput: [],
   });
 
@@ -34,6 +34,8 @@ const Game = () => {
     blue: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
     yellow: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
   };
+
+  const maxLevel = 15;
 
 
   // When the game starts => is active:
@@ -92,20 +94,20 @@ const Game = () => {
       }
     } 
     if (eqArrays(game.playerInput, game.actualGame) === true) {
-      if (game.level < 10) {
+      if (game.level < maxLevel) {
         console.log('check actualGame', game.actualGame);
         alert('Welcome to the next level.');
         clearGame();
         setGame(prev => ({
           ...prev,
           level: game.level + 1,
-          actualGame: [...game.actualGame, game.actualGame[(Math.floor(Math.random()*4))]]
+          actualGame: [...game.actualGame, game.gameRandomOutput[(Math.floor(Math.random()*4))]]
         }));
         //playSequence();
       }
-      if (game.level === 10) {
+      if (game.level === maxLevel) {
         alert('You won the game after 20 levels!');
-        //clearGame();
+        resetGame();
       }
     }
   };
@@ -175,7 +177,7 @@ const Game = () => {
         active: false,
         level: 0,
         playerInput: [],
-        actualGame: ['red', 'green', 'blue', 'yellow'],
+        actualGame: ['red', 'green'],
       }
     });
   };
@@ -298,7 +300,7 @@ const Game = () => {
       </div>
       
       <div className='game'>
-        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / 10</span>
+        <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / {maxLevel}</span>
         <Timer timer={timer} resetGame={resetGame} />
         <br />
         <button className={style.red} onClick={() => playerMoves('red')}></button>
