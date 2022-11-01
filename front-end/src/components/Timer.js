@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 const Timer = (props) => {
-  //Set timer for 5 minutes:
+  //Set timer for 4 minutes:
 
-  const [countdown, setCountdown] = useState(300);
+  const [countdown, setCountdown] = useState(240);
   const minutes = Math.floor(countdown / 60);
   const seconds = Math.floor(countdown % 60);
 

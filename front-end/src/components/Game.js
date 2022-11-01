@@ -44,7 +44,7 @@ const Game = () => {
       return {
         ...prev, 
         active: true,
-        level: game.level + 1
+        level: prev.level + 1
       }
     });
   };
