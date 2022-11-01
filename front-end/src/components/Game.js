@@ -293,10 +293,13 @@ const Game = () => {
       </div>
 
       <Modal show={show} onHide={handleClose} animation={false}>        
-          <Button className='close_btn' onClick={handleClose}>
+          {/* <Button className='close_btn' onClick={handleClose}>
             X  
-          </Button>
+          </Button> */}
         <Modal.Body className='alert'>{showAlert}</Modal.Body>
+        <Modal.Footer className='footer'>
+          Click anywhere on the screen to close popup.
+        </Modal.Footer>
       </Modal>
       
       <div className='game'>

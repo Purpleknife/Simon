@@ -164,6 +164,15 @@
 .alert {
   font-weight: bold;
   font-size: 18px;
+  text-align: center;
+  margin-bottom: -0.5em;
+}
+
+.footer {
+  color: grey;
+  padding-right: 6em;
+  font-family: $third-font;
+  font-size: 15px;
 }
 
 .strict-neon {
