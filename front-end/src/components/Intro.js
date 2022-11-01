@@ -49,9 +49,10 @@ const Intro = () => {
           - Each button (red, green, blue and yellow) has its own distinct sound.<br />
           - For each level, the game will play a unique sequence of sounds with their respective buttons lightning up.<br />
           - After hearing the sequence, you are supposed to repeat it.<br />
-          - The game is over if you fail to repeat the same sequence.<br /><br />
-          - <strong>Strict mode:</strong> restarts the game whenever you select the wrong field in a pattern.<br />
-          - <strong>Normal mode:</strong> repeats the pattern subsequent of the wrong button being pressed.
+          - The game is over if you fail to complete the 10 levels in 5 minutes.<br />
+          - There are 2 modes:<br />
+          <strong>Strict mode:</strong> restarts the game whenever you select the wrong field in a pattern.<br />
+          <strong>Normal mode:</strong> repeats the pattern subsequent of the wrong button being pressed. It's the default mode.
           <br /><br />
           <span id='fun'>Have fun!</span>
         </Modal.Body>
