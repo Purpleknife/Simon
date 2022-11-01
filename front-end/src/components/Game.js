@@ -306,9 +306,9 @@ const Game = () => {
         <span id='level'><i className="fa-solid fa-caret-right"></i>  Level {game.level} / {maxLevel}</span>
         <Timer timer={timer} resetGame={resetGame} setShow={setShow} setShowAlert={setShowAlert}/>
         <br />
-        <button className={style.red} onClick={() => playerMoves('red')}></button>
+        {game.active ? <button className={style.red} onClick={() => playerMoves('red')}></button> : <button className={style.red} onClick={() => playerMoves('red')} disabled></button>}
         <div className='middle'>
-          <button className={style.green} onClick={() => playerMoves('green')}></button>
+          {game.active ? <button className={style.green} onClick={() => playerMoves('green')}></button> : <button className={style.green} onClick={() => playerMoves('green')} disabled></button>}
 
           <div className='mid'>
             <div id='count'>
@@ -327,9 +327,9 @@ const Game = () => {
 
           </div>
 
-          <button className={style.blue} onClick={() => playerMoves('blue')}></button>
+          {game.active ? <button className={style.blue} onClick={() => playerMoves('blue')}></button> : <button className={style.blue} onClick={() => playerMoves('blue')} disabled></button>}
         </div>
-        <button className={style.yellow} onClick={() => playerMoves('yellow')}></button>
+        {game.active ? <button className={style.yellow} onClick={() => playerMoves('yellow')}></button> : <button className={style.yellow} onClick={() => playerMoves('yellow')} disabled></button>}
       </div>
 
     </div>
