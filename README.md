@@ -19,7 +19,7 @@ Simon is a game of short-term memory skill invented by Ralph H. Baer and Howard 
 - [X] The Game has 2 modes:
   - [X] <strong>Strict mode:</strong> restarts the game whenever the player selects the wrong field in a pattern.
   - [X] <strong>Normal mode:</strong> repeats the pattern subsequent of the wrong button being pressed.
-- [X] A popup with the Game's instructions/ rules is added for the users that are not familiar with it.
+- [X] A popup with the Game's instructions/ rules is added for the users who are not familiar with it.
 
 ## Dependencies
 - React JS
@@ -28,4 +28,5 @@ Simon is a game of short-term memory skill invented by Ralph H. Baer and Howard 
 
 
 ## Final Product
+![App Overview - Simon](https://user-images.githubusercontent.com/107894342/199627003-38f42daa-23e0-4e19-a5fc-208b3f988f5e.png)
 
