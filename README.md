@@ -32,5 +32,5 @@ Simon is a game of short-term memory skill invented by Ralph H. Baer and Howard 
 
 ## Final Product
 ![App Overview - Simon](https://user-images.githubusercontent.com/107894342/199627003-38f42daa-23e0-4e19-a5fc-208b3f988f5e.png)
-![App Overview Video - Simon](https://user-images.githubusercontent.com/107894342/199630264-be4b62dc-bcdb-47b3-962a-a0f1db486919.mp4)
+https://user-images.githubusercontent.com/107894342/199630264-be4b62dc-bcdb-47b3-962a-a0f1db486919.mp4
 
