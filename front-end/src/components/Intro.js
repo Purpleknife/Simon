@@ -20,7 +20,7 @@ const Intro = () => {
         </Button>&nbsp;
       </div>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Game Instructions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
