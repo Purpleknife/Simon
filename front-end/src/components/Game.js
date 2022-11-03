@@ -86,7 +86,7 @@ const Game = () => {
     console.log('check runs');
     if (eqArrays(game.playerInput, game.actualGame) === false) {
       if (game.strict) {
-        setShowAlert('It\'s strict mode. Try again from scratch');
+        setShowAlert('It\'s strict mode. Try again from scratch.');
         setShow(true);
         resetGame();
       } else {
@@ -97,7 +97,6 @@ const Game = () => {
     } 
     if (eqArrays(game.playerInput, game.actualGame) === true) {
       if (game.level < maxLevel) {
-        console.log('check actualGame', game.actualGame);
         setShowAlert(`Welcome to the level ${game.level + 1}.`);
         setShow(true);
         clearGame();
@@ -118,11 +117,6 @@ const Game = () => {
 
   // Function that plays the sounds and triggers changeStyle() with an interval:
   const playSequence = () => {
-    console.log('playSequence runs');
-    console.log('level', game.level);
-    console.log('playSequence actual game', game.actualGame)
-    console.log('timer', timer);
-
     let i = 0;
     const interval = setInterval(() => {
       changeStyle(game.actualGame[i]);
@@ -138,9 +132,6 @@ const Game = () => {
 
   // check is supposed to run whenever the player finishes playing:
   useEffect(() => {
-    console.log('player input state', game.playerInput);
-    console.log('actual game', game.actualGame);    
-
     if (game.playerInput.length === game.actualGame.length && game.actualGame.length > 0 && game.playerInput.length > 0) { //=> Means the player's turn is over.
       check();
     };
@@ -150,7 +141,6 @@ const Game = () => {
 
   // To proceed to the next level:
   const clearGame = () => {
-    console.log('CLEAR GAME RUNS!!');
     setGame(prev => {
       return {
         ...prev,
@@ -164,7 +154,6 @@ const Game = () => {
 
   // To reset the game:
   const resetGame = () => {
-    console.log('reset game runs!!!')
     setResetTimer(true);
     setGame(prev => {
       return {
@@ -181,7 +170,6 @@ const Game = () => {
 
   // To go back to last sequence:
   const goBack = () => {
-    console.log('goBack runs!!!')
     setGame(prev => {
       return {
         ...prev,
